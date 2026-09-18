@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bot_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U new_user -d calendar"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - bot_network
+    environment:
+      POSTGRES_DB: calendar
+      POSTGRES_USER: new_user
+      POSTGRES_PASSWORD: new_user
+
+  bot:
+    build:
+      context: .
+      dockerfile: docker/bot/Dockerfile
+    container_name: bot_app
+    environment:
+      DB_HOST: db
+      DB_NAME: calendar
+      DB_USER: new_user
+      DB_PASSWORD: new_user
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - bot_network
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    container_name: bot_web
+    environment:
+      DB_HOST: db
+      DB_NAME: calendar
+      DB_USER: new_user
+      DB_PASSWORD: new_user
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    networks:
+      - bot_network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+
+networks:
+  bot_network:
+    driver: bridge

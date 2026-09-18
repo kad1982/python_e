@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{% if category != 'all' %}
+{{ category }}
+{% else %}
+Все товары
+{% endif %}
+{% endblock %}
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<h1>
+    {% if category != 'all' %}
+    {{ category }}
+    {% else %}
+    Все товары
+    {% endif %}
+</h1>
+<ul class="d-flex flex-wrap">
+    {% for product in products %}
+    <div class="col-lg-4 col-md-6 p-4">
+        <div class="product-card">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static "images/not_image.jpg" %}" class="product-image" alt="{{ product.name }}">
+            {% endif %}
+            <div class="product-body">
+                <a href="{% url "products:product_detail" product.id %}">
+                <p class="product-name">
+                    {{ product.name }}
+                </p>
+                </a>
+                <p class="product-text">
+                    {{ product.description|truncatechars:30 }}
+                </p>
+                <div class="d-flex flex-column">
+                    {% if product.discount %}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="product-old-price">{{product.price}} ₽</div>
+                        <div class="product-discount">Скидка {{ product.discount }} %</div>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="product-price">{{ product.sell_price }} ₽</div>
+                        <a href="{% url "shopping_carts:quick_add_to_cart" product.id %}" class="btn add-to-cart"
+                        data-product-id="{{ product.id }}">
+                        {% csrf_token %}
+                        <img class="mx-1" src="{% static "icons/cart-plus.svg" %}" alt="Catalog Icon"
+                        width="32" height="32">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+{% endblock %}

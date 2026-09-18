@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Отмена заказа #{{ order.id }}{% endblock %}
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">⚠️ Отмена заказа</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Вы уверены, что хотите отменить заказ #{{ order.id }}?</h5>
+
+                    <div class="alert alert-warning">
+                        <p><strong>Сумма заказа:</strong> {{ order.total_amount }} ₽</p>
+                        <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+                        <p><strong>Товаров:</strong> {{ order.items.count }} шт.</p>
+                    </div>
+
+                    <p class="text-muted">После отмены заказа товары будут возвращены на склад.</p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'orders:order_detail' order.id %}" class="btn btn-secondary">
+                                ← Вернуться
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                ✅ Да, отменить заказ
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

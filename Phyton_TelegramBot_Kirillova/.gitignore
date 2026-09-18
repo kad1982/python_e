@@ -1,0 +1,6 @@
+.venv/
+settings/.envs/.env
+not_git
+JetBrains
+Python
+.idea/

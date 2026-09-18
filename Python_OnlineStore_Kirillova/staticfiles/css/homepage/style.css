@@ -1,0 +1,385 @@
+/* ===== Баннер / Приветствие ===== */
+.hero-banner {
+    background: linear-gradient(135deg, #FDF6EC 0%, #F5EBE0 50%, #E8D5C4 100%);
+    border-radius: 24px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px rgba(107, 66, 38, 0.15);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212, 165, 116, 0.3);
+}
+
+/* Патчворк-фон (лоскутный узор) */
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: /* Лоскутки разных размеров и цветов */ radial-gradient(circle at 10% 20%, #E8C9C0 0%, #E8C9C0 3%, transparent 3%),
+    radial-gradient(circle at 30% 70%, #D4A574 0%, #D4A574 4%, transparent 4%),
+    radial-gradient(circle at 60% 15%, #8BA888 0%, #8BA888 3%, transparent 3%),
+    radial-gradient(circle at 80% 60%, #E8D5A3 0%, #E8D5A3 4%, transparent 4%),
+    radial-gradient(circle at 90% 90%, #C4A882 0%, #C4A882 3%, transparent 3%),
+    radial-gradient(circle at 5% 85%, #F5D6C6 0%, #F5D6C6 4%, transparent 4%),
+    radial-gradient(circle at 50% 50%, #D4C5A9 0%, #D4C5A9 2%, transparent 2%),
+        /* Квадратики-лоскутки */ repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 20px,
+            rgba(212, 165, 116, 0.05) 20px,
+            rgba(212, 165, 116, 0.05) 21px
+    ),
+    repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 20px,
+            rgba(139, 90, 43, 0.04) 20px,
+            rgba(139, 90, 43, 0.04) 21px
+    );
+    background-size: 60px 60px, 60px 60px, 30px 30px, 40px 40px, 50px 50px, 35px 35px, 20px 20px, 40px 40px, 40px 40px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-banner .banner-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Текст ===== */
+.welcome-text .main-title {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 10px;
+}
+
+.welcome-text .main-title .d-block {
+    font-size: 2.8rem;
+    color: #6B4226;
+    line-height: 1.2;
+}
+
+.welcome-text .main-title .sub-title {
+    font-size: 1.4rem;
+    color: #8B5A2B;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+}
+
+.welcome-text .main-title .brand-name {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #6B4226;
+    display: block;
+    margin-top: 5px;
+    background: linear-gradient(135deg, #6B4226, #8B5A2B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== Разделитель ===== */
+.divider-patchwork {
+    width: 120px;
+    height: 6px;
+    background: repeating-linear-gradient(
+            90deg,
+            #E8C9C0 0px,
+            #E8C9C0 12px,
+            #D4A574 12px,
+            #D4A574 24px,
+            #8BA888 24px,
+            #8BA888 36px,
+            #E8D5A3 36px,
+            #E8D5A3 48px
+    );
+    border-radius: 3px;
+    margin: 15px 0 20px;
+}
+
+/* ===== Описание ===== */
+.welcome-text .description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4A3728;
+    max-width: 650px;
+    font-weight: 400;
+}
+
+.welcome-text .description strong {
+    color: #6B4226;
+    font-weight: 600;
+}
+
+/* ===== Иконка с лоскутками ===== */
+.welcome-icon {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+}
+
+.welcome-icon i {
+    font-size: 8rem;
+    color: #6B4226;
+    opacity: 0.15;
+    display: block;
+}
+
+.icon-patches {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.patch {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    transform: rotate(15deg);
+    opacity: 0.4;
+    animation: floatPatch 6s ease-in-out infinite;
+}
+
+.patch-1 {
+    background: #E8C9C0;
+    top: 5%;
+    left: 10%;
+    width: 50px;
+    height: 45px;
+    transform: rotate(10deg);
+    animation-delay: 0s;
+}
+
+.patch-2 {
+    background: #D4A574;
+    top: 50%;
+    right: 5%;
+    width: 35px;
+    height: 40px;
+    transform: rotate(-15deg);
+    animation-delay: 1.5s;
+}
+
+.patch-3 {
+    background: #8BA888;
+    bottom: 10%;
+    left: 20%;
+    width: 45px;
+    height: 35px;
+    transform: rotate(25deg);
+    animation-delay: 3s;
+}
+
+.patch-4 {
+    background: #E8D5A3;
+    top: 20%;
+    right: 30%;
+    width: 30px;
+    height: 30px;
+    transform: rotate(-5deg);
+    animation-delay: 4.5s;
+}
+
+@keyframes floatPatch {
+    0%, 100% {
+        transform: translateY(0px) rotate(15deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(20deg);
+    }
+}
+
+/* ===== Кнопки ===== */
+.buttons .btn-patchwork {
+    background-color: #6B4226;
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(107, 66, 38, 0.3);
+}
+
+.buttons .btn-patchwork:hover {
+    background-color: #8B5A2B;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(107, 66, 38, 0.4);
+}
+
+.buttons .btn-patchwork-outline {
+    background: transparent;
+    color: #6B4226;
+    border: 2px solid #6B4226;
+    padding: 12px 38px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+.buttons .btn-patchwork-outline:hover {
+    background: #6B4226;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(107, 66, 38, 0.3);
+}
+
+/* ===== Преимущества ===== */
+.advantages {
+    padding: 10px 0;
+}
+
+.advantage-item {
+    background: #fff;
+    padding: 25px 15px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(212, 165, 116, 0.15);
+    height: 100%;
+}
+
+.advantage-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(107, 66, 38, 0.1);
+}
+
+.advantage-item i {
+    font-size: 2.2rem;
+    color: #6B4226;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.advantage-item h6 {
+    font-weight: 600;
+    color: #6B4226;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.advantage-item small {
+    color: #8B8B8B;
+    font-size: 0.8rem;
+}
+
+/* ===== Заголовок раздела ===== */
+.section-title {
+    font-family: 'Playfair Display', serif;
+    color: #6B4226;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title .title-icon {
+    font-size: 1.8rem;
+}
+
+.section-title .title-line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg, #D4A574, transparent);
+}
+
+/* ===== Адаптив ===== */
+@media (max-width: 992px) {
+    .hero-banner {
+        padding: 35px 25px;
+    }
+
+    .welcome-text .main-title .d-block {
+        font-size: 2.2rem;
+    }
+
+    .welcome-text .main-title .brand-name {
+        font-size: 2.5rem;
+    }
+
+    .welcome-icon i {
+        font-size: 5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-banner {
+        padding: 25px 18px;
+        border-radius: 16px;
+    }
+
+    .welcome-text .main-title .d-block {
+        font-size: 1.6rem;
+    }
+
+    .welcome-text .main-title .sub-title {
+        font-size: 1rem;
+    }
+
+    .welcome-text .main-title .brand-name {
+        font-size: 2rem;
+    }
+
+    .welcome-text .description {
+        font-size: 0.95rem;
+    }
+
+    .buttons .btn-patchwork,
+    .buttons .btn-patchwork-outline {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+
+    .buttons .btn-patchwork-outline {
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+
+    .welcome-icon i {
+        font-size: 3.5rem;
+    }
+
+    .patch {
+        display: none;
+    }
+
+    .advantage-item {
+        padding: 18px 10px;
+    }
+
+    .advantage-item i {
+        font-size: 1.6rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner {
+        padding: 20px 12px;
+    }
+
+    .welcome-text .main-title .d-block {
+        font-size: 1.3rem;
+    }
+
+    .welcome-text .main-title .brand-name {
+        font-size: 1.6rem;
+    }
+
+    .divider-patchwork {
+        width: 80px;
+        height: 4px;
+    }
+}

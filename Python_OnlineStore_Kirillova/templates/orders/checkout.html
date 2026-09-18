@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Быстрое оформление заказа{% endblock %}
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Быстрое оформление заказа</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📝 Контактные данные</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">
+                                {{ form.name.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.address.id_for_label }}" class="form-label">
+                                {{ form.address.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.address }}
+                            <small class="text-muted">Пример: г. Москва, ул. Ленина, д. 10, кв. 5</small>
+                            {% if form.address.errors %}
+                                <div class="text-danger">{{ form.address.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                {{ form.email.label }} <span class="text-danger">*</span>
+                            </label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            ✅ Оформить заказ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🛒 Ваш заказ</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Товаров:</strong> {{ total_items }} шт.
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3">
+                        <h6>Товары в заказе:</h6>
+                        <ul class="list-unstyled">
+                            {% for item in cart_items %}
+                                <li class="mb-2">
+                                    <div class="d-flex justify-content-between">
+                                        <span>{{ item.product.name }}</span>
+                                        <span>{{ item.quantity }} x {{ item.product.price }} ₽</span>
+                                    </div>
+                                    <small class="text-muted">{{ item.total_price }} ₽</small>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <strong>Итого:</strong>
+                        <strong class="text-success">{{ total }} ₽</strong>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="{% url 'shopping_carts:cart_view' %}" class="text-decoration-none">
+                        ← Вернуться в корзину
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+.venv/
+db.sqlite3
+__pycache__/
+.idea/
+
+/.envs/.env
+
+JetBrains
+Python
+
+# Python virtual environments
+venv/
+env/
+ENV/
+**/virtualenv/
+
+# Python cache
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# virtualenv
+**/.venv/

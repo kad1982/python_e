@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<h2>Вход</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% if form.non_field_errors %}
+        <div class="error-messages">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    
+    <div style="max-width: 400px;">
+        <label>Имя пользователя:</label>
+        {{ form.username }}
+        
+        <label>Пароль:</label>
+        {{ form.password }}
+        
+        <br><br>
+        <button type="submit">Войти</button>
+    </div>
+</form>
+
+<p>Нет аккаунта? <a href="{% url 'clients:register' %}">Зарегистрируйтесь</a></p>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Заказ #{{ order.id }}{% endblock %}
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Заказ #{{ order.id }}</h1>
+        {% if order.status != 'delivered' and order.status != 'cancelled' and order.status != 'shipped' %}
+            <a href="{% url 'orders:cancel_order' order.id %}" class="btn btn-danger">
+                ❌ Отменить заказ
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>📋 Информация о заказе</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Дата заказа:</th>
+                            <td>{{ order.order_date|date:"d.m.Y H:i" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Статус:</th>
+                            <td>
+                                <span class="badge
+                                    {% if order.status == 'pending' %}bg-warning
+                                    {% elif order.status == 'processing' %}bg-info
+                                    {% elif order.status == 'shipped' %}bg-primary
+                                    {% elif order.status == 'delivered' %}bg-success
+                                    {% elif order.status == 'cancelled' %}bg-danger
+                                    {% elif order.status == 'refunded' %}bg-secondary
+                                    {% endif %}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Сумма:</th>
+                            <td><strong>{{ order.total_amount }} ₽</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Способ оплаты:</th>
+                            <td>{{ order.get_payment_method_display|default:"Не указан" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Статус оплаты:</th>
+                            <td>{{ order.payment_status|title }}</td>
+                        </tr>
+                        {% if order.tracking_number %}
+                            <tr>
+                                <th>Трек-номер:</th>
+                                <td><strong>{{ order.tracking_number }}</strong></td>
+                            </tr>
+                        {% endif %}
+                        {% if order.delivered_at %}
+                            <tr>
+                                <th>Дата доставки:</th>
+                                <td>{{ order.delivered_at|date:"d.m.Y H:i" }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>📍 Адрес доставки</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>{{ order.shipping_postal_code }}, {{ order.shipping_city }}</strong></p>
+                    <p>ул. {{ order.shipping_street }}, д. {{ order.shipping_house_number }}</p>
+                    {% if order.shipping_apartment %}
+                        <p>кв. {{ order.shipping_apartment }}</p>
+                    {% endif %}
+                    <p>{{ order.shipping_country }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>📦 Товары в заказе</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                            <th>Скидка</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'products:product_detail' item.product.id %}" class="text-decoration-none">
+                                        {{ item.product.name }}
+                                    </a>
+                                </td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.price_at_purchase }} ₽</td>
+                                <td>
+                                    {% if item.discount_amount > 0 %}
+                                        {{ item.discount_amount }} ₽
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+                                <td><strong>{{ item.subtotal }} ₽</strong></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="text-end"><strong>Итого:</strong></td>
+                            <td><strong>{{ order.total_amount }} ₽</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'orders:order_history' %}" class="btn btn-secondary">
+            ← Все заказы
+        </a>
+        <a href="{% url 'products:product_list' %}" class="btn btn-primary">
+            Продолжить покупки
+        </a>
+    </div>
+</div>
+{% endblock %}

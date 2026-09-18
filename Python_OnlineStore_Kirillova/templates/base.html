@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- ===== ВНЕШНИЕ СТИЛИ ===== -->
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+          rel="stylesheet">
+
+    <!-- ===== СОБСТВЕННЫЕ СТИЛИ ===== -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Блок для дополнительных стилей -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<!-- ============================================ -->
+<!-- ВЕРХНЯЯ СТРОКА (телефон, соцсети, личный кабинет) -->
+<!-- ============================================ -->
+<div class="header-top">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <i class="fas fa-phone-alt me-2"></i>
+                <a href="tel:+78001234567">8 (800) 123-45-67</a>
+                <span class="mx-2 text-white-50">|</span>
+                <i class="far fa-envelope me-2"></i>
+                <a href="mailto:info@patchwork.ru">info@patchwork.ru</a>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'clients:profile' %}" class="me-3" title="Личный кабинет">
+                        <i class="fas fa-user-circle me-1"></i>{{ user.username }}
+                    </a>
+                    <form action="{% url 'clients:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link text-danger p-0"
+                                style="text-decoration: none; border: none; background: none; vertical-align: baseline;">
+                            <i class="fas fa-sign-out-alt me-1"></i>Выйти
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'clients:login' %}" class="me-3" title="Войти">
+                        <i class="fas fa-sign-in-alt me-1"></i>Войти
+                    </a>
+                    <a href="{% url 'clients:register' %}" class="me-3" title="Регистрация">
+                        <i class="fas fa-user-plus me-1"></i>Регистрация
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================ -->
+<!-- ЛОГОТИП, НАВИГАЦИЯ И КОРЗИНА-->
+<!-- ============================================ -->
+<div class="logo-area">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-3 text-center text-md-start">
+                <a href="{% url 'products:product_list' %}" class="logo-text">
+                    <i class="fas fa-patchwork logo-icon me-2"></i>
+                    Лоскутная мастерская
+                    <small>— ткани для пэчворка —</small>
+                </a>
+            </div>
+            <div class="col-md-3 text-center text-md-center" style="width: 50%">
+                <nav class="navbar navbar-main navbar-expand-lg">
+                    <div class="container">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#mainNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNavbar">
+                            <ul class="navbar-nav mx-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/' %}active{% endif %}"
+                                       href="{% url 'homepage:index' %}">
+                                        <i class="fas fa-home me-1"></i><br/>Главная
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {% if request.resolver_match.app_name == 'catalog' %}active{% endif %}"
+                                       href="#" id="catalogDropdown" role="button" data-bs-toggle="dropdown">
+                                        <i class="fas fa-th-large me-1"></i><br/>Каталог
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="catalogDropdown">
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'products:product_list' %}?category=all">Все
+                                            товары</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'products:product_list' %}?category=Ткани">🧵
+                                            Ткани</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}?category=Наборы
+                            для пэчворка">🧶 Наборы
+                                            для пэчворка</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}?category=Схемы и
+                            выкройки">📐 Схемы и
+                                            выкройки</a></li>
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'products:product_list' %}?category=Инструменты">✂️
+                                            Инструменты</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}?category=Книги и
+                            журналы">📚 Книги и
+                                            журналы</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/about/' %}active{% endif %}"
+                                       href="{% url 'homepage:about' %}">
+                                        <i class="fas fa-info-circle me-1"></i><br/>О нас
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/masters/' %}active{% endif %}"
+                                       href="{% url 'homepage:masters' %}">
+                                        <i class="fas fa-user-friends me-1"></i><br/>Мастера
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/orders/' %}active{% endif %}"
+                                       href="{% url 'orders:order_history' %}">
+                                        <i class="fas fa-clipboard-list me-1"></i><br/>Мои заказы
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if request.path == '/contacts/' %}active{% endif %}"
+                                       href="{% url 'homepage:contacts' %}">
+                                        <i class="fas fa-phone me-1"></i><br/>Контакты
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="col-md-3 text-center text-md-end">
+                <a href="{% url 'shopping_carts:cart_view' %}" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    Корзина
+                    {% if cart_total_items > 0 %}
+                    <span class="cart-badge">{{ cart_total_items }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================ -->
+<!-- ДЕКОРАТИВНАЯ ПОЛОСА (патчворк-бордюр) -->
+<!-- ============================================ -->
+<div class="patchwork-border"></div>
+
+<!-- ============================================ -->
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<!-- ============================================ -->
+<main class="main-content">
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<!-- ============================================ -->
+<!-- ФУТЕР -->
+<!-- ============================================ -->
+<footer class="footer">
+    <div class="container">
+        <div class="row g-4">
+            <!-- О нас -->
+            <div class="col-md-3">
+                <h5 class="footer-title">
+                    <i class="fas fa-patchwork me-2"></i>Лоскутная мастерская
+                </h5>
+                <p style="font-size: 0.95rem;">
+                    Интернет-магазин тканей и материалов для лоскутного шитья.
+                    Вдохновляем на создание уютных вещей своими руками.
+                </p>
+                <div class="social-links mt-3">
+                    <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <!-- Быстрые ссылки -->
+            <div class="col-md-3">
+                <h5 class="footer-title">📌 Быстрые ссылки</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'products:product_list' %}">Каталог</a></li>
+                    <li><a href="{% url 'homepage:about' %}">О нас</a></li>
+                    <li><a href="{% url 'homepage:masters' %}">Мастера</a></li>
+                    <li><a href="{% url 'homepage:contacts' %}">Контакты</a></li>
+                </ul>
+            </div>
+
+            <!-- Категории -->
+            <div class="col-md-3">
+                <h5 class="footer-title">🧵 Категории</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'products:product_list' %}?category=Ткани">Ткани</a></li>
+                    <li><a href="{% url 'products:product_list' %}?category=Наборы для пэчворка">Наборы для пэчворка</a>
+                    </li>
+                    <li><a href="{% url 'products:product_list' %}?category=Схемы и выкройки">Схемы и выкройки</a></li>
+                    <li><a href="{% url 'products:product_list' %}?category=Инструменты">Инструменты</a></li>
+                    <li><a href="{% url 'products:product_list' %}?category=Книги и журналы">Книги и журналы</a></li>
+                </ul>
+            </div>
+
+            <!-- Контакты -->
+            <div class="col-md-3">
+                <h5 class="footer-title">📞 Контакты</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone me-2"></i>8 (800) 123-45-67</li>
+                    <li><i class="fas fa-envelope me-2"></i>info@patchwork.ru</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i>г. Москва, ул. Ткацкая, 15</li>
+                    <li><i class="far fa-clock me-2"></i>Пн-Пт: 10:00 – 20:00</li>
+                    <li><i class="far fa-clock me-2"></i>Сб-Вс: 11:00 – 18:00</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="footer-divider">
+
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    &copy; {% now "Y" %} Лоскутная мастерская. Все права защищены.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="{% url 'homepage:privacy' %}">Политика конфиденциальности</a>
+                    <span class="mx-2 text-white-50">|</span>
+                    <a href="{% url 'homepage:terms' %}">Условия использования</a>
+                    <span class="mx-2 text-white-50">|</span>
+                    <a href="{% url 'homepage:delivery' %}">Доставка и оплата</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ============================================ -->
+<!-- СКРИПТЫ -->
+<!-- ============================================ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Собственный JS -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<!-- Блок для дополнительных скриптов -->
+{% block extra_js %}{% endblock %}
+</body>
+</html>

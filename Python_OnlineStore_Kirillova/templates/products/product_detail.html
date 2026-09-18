@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="product-card">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
+        {% else %}
+            <img src="{% static "images/not_image.jpg" %}" class="product-image" alt="{{ product.name }}">
+        {% endif %}
+        <div class="product-body">
+            <p class="product-text">Цена: <strong>{{ product.sell_price }} ₽</strong></p>
+            <h5 class="product-name">{{ product.name }}</h5>
+            <p class="product-text">{{ product.description }}</p>
+            <a href="{% url "shopping_carts:quick_add_to_cart" product.id %}" class="btn add-to-cart-text"
+            data-product-id="{{ product.id }}">
+            {% csrf_token %}
+            Добавить в корзину</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

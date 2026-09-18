@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Редактирование профиля{% endblock %}
+{% block content %}
+<h2>Редактирование профиля</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div style="max-width: 600px;">
+        <h3>Личные данные</h3>
+
+        <label>Имя пользователя:</label>
+        <input type="text" value="{{ user.username }}" disabled style="background: #f0f0f0; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Фамилия *:</label>
+        <input type="text" name="last_name" value="{{ client.last_name|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Имя *:</label>
+        <input type="text" name="first_name" value="{{ client.first_name|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Отчество:</label>
+        <input type="text" name="middle_name" value="{{ client.middle_name|default:'' }}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Email *:</label>
+        <input type="email" name="email" value="{{ client.email|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Телефон *:</label>
+        <input type="text" name="phone" value="{{ client.phone|default:'' }}" placeholder="+71234567890" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+        <small>Формат: +71234567890 (10-15 цифр)</small>
+
+        <hr>
+
+        <h3>Адрес доставки</h3>
+
+        <label>Страна:</label>
+        <input type="text" name="country" value="{{ client.country|default:'Russia' }}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Город *:</label>
+        <input type="text" name="city" value="{{ client.city|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Почтовый индекс:</label>
+        <input type="text" name="postal_code" value="{{ client.postal_code|default:'' }}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Улица *:</label>
+        <input type="text" name="street" value="{{ client.street|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Номер дома *:</label>
+        <input type="text" name="house_number" value="{{ client.house_number|default:'' }}" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <label>Квартира:</label>
+        <input type="text" name="apartment" value="{{ client.apartment|default:'' }}" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+
+        <br><br>
+        <button type="submit">Сохранить изменения</button>
+        <a href="{% url 'clients:profile' %}" style="margin-left: 10px;">Отмена</a>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Лоскутная мастерская — ткани для пэчворка{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Баннер / Приветствие -->
+    <div class="hero-banner fade-in-up">
+        <div class="banner-content">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="welcome-text">
+                        <h1 class="main-title">
+                            <span class="d-block">🧵 Привет, дорогой друг!</span>
+                            <span class="sub-title">Мы рады приветствовать тебя в нашей</span>
+                            <span class="brand-name">Лоскутной мастерской</span>
+                        </h1>
+
+                        <div class="divider-patchwork"></div>
+
+                        <p class="description">
+                            Здесь переплетаются нити традиций и вдохновения,
+                            чтобы каждая твоя работа стала <strong>шедевром</strong>.
+                        </p>
+
+                        <p class="description">
+                            🌿 У нас ты найдёшь <strong>качественные ткани</strong> для пэчворка,
+                            авторские наборы, инструменты и идеи для творчества.
+                            Мы собрали самое лучшее, чтобы твои лоскутные истории
+                            получались <strong>тёплыми, уютными и неповторимыми</strong>.
+                        </p>
+
+                        <div class="buttons mt-4">
+                            <a href="{% url 'products:product_list' %}?category=Ткани" class="btn btn-patchwork btn-lg">
+                                <i class="fas fa-shopping-bag me-2"></i>Смотреть ткани
+                            </a>
+                            <a href="{% url 'homepage:about' %}" class="btn btn-patchwork-outline btn-lg ms-2">
+                                <i class="fas fa-info-circle me-2"></i>О нас
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="welcome-image">
+                        <img src="{% static 'images/homepage/patchwork-quilt.jpg' %}"
+                             alt="Лоскутное одеяло"
+                             class="img-fluid rounded-4 shadow-lg">
+                        <div class="image-patches">
+                            <span class="patch-img patch-1"></span>
+                            <span class="patch-img patch-2"></span>
+                            <span class="patch-img patch-3"></span>
+                            <span class="patch-img patch-4"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Преимущества -->
+    <div class="advantages mt-5">
+        <div class="row g-4">
+            <div class="col-md-3 col-6">
+                <div class="advantage-item text-center">
+                    <i class="fas fa-tshirt"></i>
+                    <h6>Качественные ткани</h6>
+                    <small>Только проверенные материалы</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="advantage-item text-center">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h6>Готовые наборы</h6>
+                    <small>Всё для творчества в одном месте</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="advantage-item text-center">
+                    <i class="fas fa-truck"></i>
+                    <h6>Быстрая доставка</h6>
+                    <small>По всей стране</small>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="advantage-item text-center">
+                    <i class="fas fa-gem"></i>
+                    <h6>Авторские схемы</h6>
+                    <small>Уникальные выкройки</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

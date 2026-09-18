@@ -1,0 +1,82 @@
+[
+  {
+    "product_name": "Ткань хлопковая 'Цветочный сад'",
+    "product_description": "Хлопковая ткань для пэчворка с ярким цветочным принтом. Плотность 120 г/м².",
+    "category": "Ткани",
+    "selling_price": 890.00,
+    "quantity": 150,
+    "reserved_quantity": 10,
+    "warehouse_location": "Склад №1, Стеллаж А2",
+    "discount": 0
+  },
+  {
+    "product_name": "Набор для пэчворка 'Лоскутная мозаика'",
+    "product_description": "Готовый набор для создания лоскутного одеяла. Включает ткань, нитки и схему.",
+    "category": "Наборы для пэчворка",
+    "selling_price": 2490.00,
+    "quantity": 45,
+    "reserved_quantity": 5,
+    "warehouse_location": "Склад №2, Стеллаж B1",
+    "discount": 10
+  },
+  {
+    "product_name": "Схема для пэчворка 'Звезда'",
+    "product_description": "Подробная схема для создания блока 'Звезда' в технике пэчворк.",
+    "category": "Схемы и выкройки",
+    "selling_price": 350.00,
+    "quantity": 200,
+    "reserved_quantity": 0,
+    "warehouse_location": "Склад №3, Стеллаж C3",
+    "discount": 0
+  },
+  {
+    "product_name": "Набор инструментов для пэчворка",
+    "product_description": "Набор включает: роликовый нож, линейку, коврик для резки.",
+    "category": "Инструменты",
+    "selling_price": 5500.00,
+    "quantity": 30,
+    "reserved_quantity": 3,
+    "warehouse_location": "Склад №1, Стеллаж D1",
+    "discount": 5
+  },
+  {
+    "product_name": "Книга 'Пэчворк для начинающих'",
+    "product_description": "Пошаговое руководство с фотографиями и схемами для начинающих.",
+    "category": "Книги и журналы",
+    "selling_price": 890.00,
+    "quantity": 75,
+    "reserved_quantity": 2,
+    "warehouse_location": "Склад №3, Стеллаж E2",
+    "discount": 0
+  },
+  {
+    "product_name": "Ткань джинсовая для пэчворка",
+    "product_description": "Джинсовая ткань синего цвета, плотность 200 г/м². Идеально для пэчворка.",
+    "category": "Ткани",
+    "selling_price": 750.00,
+    "quantity": 80,
+    "reserved_quantity": 0,
+    "warehouse_location": "Склад №1, Стеллаж А3",
+    "discount": 15
+  },
+  {
+    "product_name": "Набор лоскутов 'Радуга'",
+    "product_description": "Набор из 20 разноцветных лоскутов хлопковой ткани для пэчворка.",
+    "category": "Наборы для пэчворка",
+    "selling_price": 1200.00,
+    "quantity": 100,
+    "reserved_quantity": 15,
+    "warehouse_location": "Склад №2, Стеллаж B2",
+    "discount": 5
+  },
+  {
+    "product_name": "Ножницы портновские",
+    "product_description": "Профессиональные портновские ножницы для ткани.",
+    "category": "Инструменты",
+    "selling_price": 850.00,
+    "quantity": 25,
+    "reserved_quantity": 0,
+    "warehouse_location": "Склад №1, Стеллаж D2",
+    "discount": 0
+  }
+]

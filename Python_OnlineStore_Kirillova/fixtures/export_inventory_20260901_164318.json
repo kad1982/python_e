@@ -1,0 +1,78 @@
+{
+  "export_date": "2026-09-01T13:43:18.904243+00:00",
+  "total_items": 8,
+  "format": "simple",
+  "filters": {
+    "category": null,
+    "min_quantity": null,
+    "max_quantity": null,
+    "name": null,
+    "warehouse": null
+  },
+  "data": [
+    {
+      "product_name": "Ткань хлопковая 'Цветочный сад'",
+      "category": "Ткани",
+      "quantity": 150,
+      "reserved_quantity": 10,
+      "available_quantity": 140,
+      "warehouse_location": "Склад №1, Стеллаж А2"
+    },
+    {
+      "product_name": "Набор для пэчворка 'Лоскутная мозаика'",
+      "category": "Наборы для пэчворка",
+      "quantity": 45,
+      "reserved_quantity": 5,
+      "available_quantity": 40,
+      "warehouse_location": "Склад №2, Стеллаж B1"
+    },
+    {
+      "product_name": "Схема для пэчворка 'Звезда'",
+      "category": "Схемы и выкройки",
+      "quantity": 200,
+      "reserved_quantity": 0,
+      "available_quantity": 200,
+      "warehouse_location": "Склад №3, Стеллаж C3"
+    },
+    {
+      "product_name": "Набор инструментов для пэчворка",
+      "category": "Инструменты",
+      "quantity": 30,
+      "reserved_quantity": 3,
+      "available_quantity": 27,
+      "warehouse_location": "Склад №1, Стеллаж D1"
+    },
+    {
+      "product_name": "Книга 'Пэчворк для начинающих'",
+      "category": "Книги и журналы",
+      "quantity": 75,
+      "reserved_quantity": 2,
+      "available_quantity": 73,
+      "warehouse_location": "Склад №3, Стеллаж E2"
+    },
+    {
+      "product_name": "Ткань джинсовая для пэчворка",
+      "category": "Ткани",
+      "quantity": 80,
+      "reserved_quantity": 0,
+      "available_quantity": 80,
+      "warehouse_location": "Склад №1, Стеллаж А3"
+    },
+    {
+      "product_name": "Набор лоскутов 'Радуга'",
+      "category": "Наборы для пэчворка",
+      "quantity": 100,
+      "reserved_quantity": 15,
+      "available_quantity": 85,
+      "warehouse_location": "Склад №2, Стеллаж B2"
+    },
+    {
+      "product_name": "Ножницы портновские",
+      "category": "Инструменты",
+      "quantity": 25,
+      "reserved_quantity": 0,
+      "available_quantity": 25,
+      "warehouse_location": "Склад №1, Стеллаж D2"
+    }
+  ]
+}
