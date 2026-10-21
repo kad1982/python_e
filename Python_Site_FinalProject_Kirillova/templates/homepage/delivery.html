@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Доставка и возврат — RentStyle{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    
+    <!-- Заголовок -->
+    <div class="text-center mb-5 pb-3">
+        <h1 class="fw-bold display-5 mb-3" style="font-family: 'Playfair Display', serif;">Доставка и возврат</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            Мы делаем процесс получения и возврата нарядов максимально удобным и безопасным для вас.
+        </p>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <!-- Карточка 1: Курьерская доставка -->
+        <div class="col-lg-4">
+            <div class="delivery-card card h-100 rounded-4 p-4">
+                <div class="text-center">
+                    <i class="fas fa-truck-fast delivery-icon"></i>
+                    <h4 class="fw-bold mb-3">Курьером до двери</h4>
+                    <p class="text-muted small mb-4">
+                        Самый быстрый и удобный способ. Курьер привезет вещь прямо к вашему подъезду в выбранный временной интервал.
+                    </p>
+                </div>
+                <ul class="list-unstyled mt-auto mb-0">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>В пределах МКАД — <strong>от 350 ₽</strong></li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>За МКАД — по тарифу перевозчика</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Возможность примерки (15 мин)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Карточка 2: Пункты выдачи -->
+        <div class="col-lg-4">
+            <div class="delivery-card card h-100 rounded-4 p-4">
+                <div class="text-center">
+                    <i class="fas fa-store delivery-icon"></i>
+                    <h4 class="fw-bold mb-3">Пункты выдачи</h4>
+                    <p class="text-muted small mb-4">
+                        Более 1000 пунктов выдачи заказов по всей России. Заберите наряд по пути на работу или учебу.
+                    </p>
+                </div>
+                <ul class="list-unstyled mt-auto mb-0">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Стоимость — <strong>от 150 ₽</strong></li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Срок хранения — 5 дней</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Самовывоз из шоурума — <strong>бесплатно</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Карточка 3: Возврат -->
+        <div class="col-lg-4">
+            <div class="delivery-card card h-100 rounded-4 p-4">
+                <div class="text-center">
+                    <i class="fas fa-rotate-left delivery-icon"></i>
+                    <h4 class="fw-bold mb-3">Обратный возврат</h4>
+                    <p class="text-muted small mb-4">
+                        Возврат осуществляется точно так же, как и получение. Вам не нужно искать, как отправить вещь обратно.
+                    </p>
+                </div>
+                <ul class="list-unstyled mt-auto mb-0">
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Вызов курьера в приложении/на сайте</li>
+                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Возврат в любой ПВЗ</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Стирка и химчистка <strong>не требуются</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5 pt-4">
+        <!-- Левая колонка: Процесс получения -->
+        <div class="col-lg-6 mb-5">
+            <h3 class="fw-bold mb-4" style="font-family: 'Playfair Display', serif;">Как проходит получение?</h3>
+            
+            <div class="timeline-step">
+                <h6 class="fw-bold mb-1">Подтверждение брони</h6>
+                <p class="text-muted small mb-0">Владелец вещи одобряет ваш запрос, и вы вносите оплату и залог.</p>
+            </div>
+            <div class="timeline-step">
+                <h6 class="fw-bold mb-1">Подготовка к отправке</h6>
+                <p class="text-muted small mb-0">Владелец проверяет вещь, упаковывает её в брендированный чехол и передаёт в доставку.</p>
+            </div>
+            <div class="timeline-step">
+                <h6 class="fw-bold mb-1">Отслеживание</h6>
+                <p class="text-muted small mb-0">Вам приходит трек-номер. Вы можете отслеживать посылку в личном кабинете.</p>
+            </div>
+            <div class="timeline-step">
+                <h6 class="fw-bold mb-1">Получение</h6>
+                <p class="text-muted small mb-0">Вы получаете наряд за 1-2 дня до начала события. Обязательно проверьте вещь перед использованием.</p>
+            </div>
+        </div>
+
+        <!-- Правая колонка: Важные моменты и штрафы -->
+        <div class="col-lg-6">
+            <div class="card bg-light border-0 rounded-4 p-4 mb-4">
+                <h4 class="fw-bold mb-3"><i class="fas fa-exclamation-triangle text-warning me-2"></i> Что важно знать</h4>
+                <ul class="text-muted small mb-0">
+                    <li class="mb-2"><strong>Примерка:</strong> При получении у курьера у вас есть 15 минут, чтобы примерить вещь и убедиться, что она подходит. Если нет — вы можете отказаться от аренды на месте (оплачивается только доставка).</li>
+                    <li class="mb-2"><strong>Повреждения:</strong> Если вы обнаружили дефект, которого не было на фото, сфотографируйте его и сразу сообщите в поддержку.</li>
+                    <li><strong>Химчистка:</strong> Вам не нужно стирать вещь перед возвратом. Вещи проходят профессиональную обработку в нашей партнерской химчистке за счёт сервиса.</li>
+                </ul>
+            </div>
+
+            <div class="card border-danger border-2 rounded-4 p-4">
+                <h4 class="fw-bold text-danger mb-3"><i class="fas fa-clock me-2"></i> Просрочка возврата</h4>
+                <p class="text-muted small mb-3">
+                    Мы понимаем, что планы могут меняться. Если вы не успеваете вернуть вещь вовремя, пожалуйста, свяжитесь с нами или владельцем минимум за 24 часа до окончания срока. 
+                </p>
+                <p class="text-muted small mb-0">
+                    За каждый день просрочки без предупреждения начисляется штраф в размере <strong>150% от суточной стоимости аренды</strong>. Сумма удерживается из залога.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

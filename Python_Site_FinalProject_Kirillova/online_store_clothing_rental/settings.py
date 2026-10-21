@@ -62,7 +62,7 @@ ROOT_URLCONF = 'online_store_clothing_rental.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,8 +123,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
@@ -137,3 +141,16 @@ MAILERS = {
 
 # Aurification settings
 AUTH_USER_MODEL = 'users.Users'
+
+# Куда перенаправлять после успешного входа
+LOGIN_REDIRECT_URL = 'homepage:index'
+
+# Куда перенаправлять, если пользователь пытается зайти на закрытую страницу
+LOGIN_URL = 'users:login'
+
+# (Опционально) Куда перенаправлять после выхода из системы
+LOGOUT_REDIRECT_URL = 'homepage:index'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

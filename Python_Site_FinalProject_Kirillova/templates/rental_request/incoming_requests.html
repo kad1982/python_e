@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Входящие запросы — RentStyle{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="fw-bold mb-4" style="font-family: 'Playfair Display', serif;">Запросы на мои вещи</h2>
+
+    {% if requests %}
+        <div class="table-responsive bg-white rounded-4 shadow-sm p-3">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Вещь</th>
+                        <th>Арендатор</th>
+                        <th>Даты</th>
+                        <th>Кол-во</th>
+                        <th>Статус</th>
+                        <th class="text-end">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                        <tr>
+                            <td>
+                                <div class="fw-bold">{{ req.listing.title|truncatechars:25 }}</div>
+                                <small class="text-muted">{{ req.listing.price }} ₽/сутки</small>
+                            </td>
+                            <td>
+                                <div>{{ req.renter.get_full_name|default:req.renter.username }}</div>
+                                <small class="text-muted"><i class="fas fa-phone me-1"></i>{{ req.renter.phone }}</small>
+                            </td>
+                            <td>{{ req.start_date|date:"d.m.Y" }} — {{ req.end_date|date:"d.m.Y" }}</td>
+                            <td>{{ req.quantity }} шт.</td>
+                            <td>
+                                <span class="badge 
+                                    {% if req.status == 0 %}bg-warning text-dark
+                                    {% elif req.status == 1 %}bg-success
+                                    {% elif req.status == 2 %}bg-danger
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ req.get_status_display }}
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a href="{% url 'rental_request:request_detail' req.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-light border shadow-sm rounded-4 p-5 text-center">
+            <i class="fas fa-inbox fa-3x text-muted mb-3 opacity-50"></i>
+            <h5>Нет входящих запросов</h5>
+            <p class="text-muted mb-0">Как только кто-то захочет арендовать вашу вещь, запрос появится здесь.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -49,10 +49,9 @@ class Users(AbstractBaseUser, PermissionsMixin):
     # Контактная информация
     email = models.EmailField(
         max_length=100,
-        unique=True,
+        blank=True, null=True,
         verbose_name="Email",
         db_index=True,
-        error_messages={'unique': "Пользователь с таким email уже зарегистрирован"},
     )
     phone = models.CharField(
         max_length=20,

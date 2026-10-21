@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Размерная сетка — RentStyle{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    
+    <!-- Заголовок -->
+    <div class="text-center mb-5 pb-3">
+        <h1 class="fw-bold display-5 mb-3" style="font-family: 'Playfair Display', serif;">Размерная сетка</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            Чтобы наряд сидел идеально, важно правильно определить свой размер. 
+            Воспользуйтесь нашими таблицами и советами по снятию мерок.
+        </p>
+    </div>
+
+    <!-- Вкладки (Женские / Мужские / Детские) -->
+    <ul class="nav nav-tabs justify-content-center mb-4" id="sizeTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="women-tab" data-bs-toggle="tab" data-bs-target="#women" type="button" role="tab" aria-controls="women" aria-selected="true">
+                <i class="fas fa-female me-2"></i>Женские размеры
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="men-tab" data-bs-toggle="tab" data-bs-target="#men" type="button" role="tab" aria-controls="men" aria-selected="false">
+                <i class="fas fa-male me-2"></i>Мужские размеры
+            </button>
+        </li>
+    </ul>
+
+    <!-- Контент вкладок -->
+    <div class="tab-content" id="sizeTabsContent">
+        
+        <!-- ЖЕНСКИЕ РАЗМЕРЫ -->
+        <div class="tab-pane fade show active" id="women" role="tabpanel" aria-labelledby="women-tab">
+            <div class="table-responsive bg-white rounded-4 shadow-sm p-3 mb-4">
+                <table class="table table-hover size-table text-center mb-0">
+                    <thead>
+                        <tr>
+                            <th>Российский размер</th>
+                            <th>Международный</th>
+                            <th>Обхват груди (см)</th>
+                            <th>Обхват талии (см)</th>
+                            <th>Обхват бедер (см)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>40</td><td>XS</td><td>80-82</td><td>60-62</td><td>86-88</td></tr>
+                        <tr><td>42</td><td>S</td><td>82-86</td><td>62-66</td><td>88-92</td></tr>
+                        <tr><td>44</td><td>M</td><td>86-90</td><td>66-70</td><td>92-96</td></tr>
+                        <tr><td>46</td><td>M/L</td><td>90-94</td><td>70-74</td><td>96-100</td></tr>
+                        <tr><td>48</td><td>L</td><td>94-98</td><td>74-78</td><td>100-104</td></tr>
+                        <tr><td>50</td><td>XL</td><td>98-102</td><td>78-82</td><td>104-108</td></tr>
+                        <tr><td>52</td><td>XXL</td><td>102-106</td><td>82-86</td><td>108-112</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-muted text-center small"><i class="fas fa-info-circle me-1"></i> Данные являются усредненными. Если ваши мерки на границе двух размеров, для облегающих вещей выбирайте меньший, для свободных — больший.</p>
+        </div>
+
+        <!-- МУЖСКИЕ РАЗМЕРЫ -->
+        <div class="tab-pane fade" id="men" role="tabpanel" aria-labelledby="men-tab">
+            <div class="table-responsive bg-white rounded-4 shadow-sm p-3 mb-4">
+                <table class="table table-hover size-table text-center mb-0">
+                    <thead>
+                        <tr>
+                            <th>Российский размер</th>
+                            <th>Международный</th>
+                            <th>Обхват груди (см)</th>
+                            <th>Обхват талии (см)</th>
+                            <th>Обхват шеи (см)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>46</td><td>XS</td><td>86-90</td><td>76-80</td><td>36-37</td></tr>
+                        <tr><td>48</td><td>S</td><td>90-94</td><td>80-84</td><td>38-39</td></tr>
+                        <tr><td>50</td><td>M</td><td>94-98</td><td>84-88</td><td>39-40</td></tr>
+                        <tr><td>52</td><td>L</td><td>98-102</td><td>88-94</td><td>41-42</td></tr>
+                        <tr><td>54</td><td>XL</td><td>102-106</td><td>94-100</td><td>43-44</td></tr>
+                        <tr><td>56</td><td>XXL</td><td>106-110</td><td>100-106</td><td>45-46</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Инструкция по снятию мерок -->
+    <div class="mt-5 pt-4">
+        <h3 class="fw-bold mb-4 text-center" style="font-family: 'Playfair Display', serif;">Как правильно снять мерки?</h3>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="measure-card text-center">
+                    <div class="mb-3 text-primary">
+                        <i class="fas fa-arrows-alt-h fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Обхват груди</h5>
+                    <p class="text-muted small mb-0">Измеряйте по самым выступающим точкам груди. Сантиметровая лента должна проходить строго горизонтально полу, не натягивайте её слишком сильно.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="measure-card text-center">
+                    <div class="mb-3 text-primary">
+                        <i class="fas fa-circle-notch fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Обхват талии</h5>
+                    <p class="text-muted small mb-0">Найдите самую узкую часть туловища (обычно на уровне пупка). Не втягивайте живот и не задерживайте дыхание во время измерения.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="measure-card text-center">
+                    <div class="mb-3 text-primary">
+                        <i class="fas fa-ellipsis-h fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Обхват бедер</h5>
+                    <p class="text-muted small mb-0">Измеряйте по самым выступающим точкам ягодиц. Убедитесь, что лента не перекручена и проходит параллельно полу.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Предупреждение -->
+    <div class="alert alert-warning border-0 shadow-sm rounded-4 mt-5 p-4 d-flex align-items-center">
+        <i class="fas fa-lightbulb fa-2x me-4 text-warning"></i>
+        <div>
+            <h6 class="fw-bold mb-1">Совет от стилистов RentStyle</h6>
+            <p class="mb-0 text-muted small">
+                Если вы арендуете вещь впервые и сомневаетесь в размере, напишите владельцу в комментарии к запросу. 
+                Многие готовы предоставить точные измерения конкретной вещи (например, длину рукава или полуобхват груди в готовом виде), что поможет сделать правильный выбор.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

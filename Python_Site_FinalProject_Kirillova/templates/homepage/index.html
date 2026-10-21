@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}RentStyle — Аренда дизайнерской одежды{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+
+    <!-- Главный баннер -->
+    <div class="hero-banner fade-in-up">
+        <div class="deco-circle deco-1"></div>
+        <div class="deco-circle deco-2"></div>
+
+        <div class="row align-items-center position-relative z-1">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <h1 class="main-title">
+                    <span class="sub-title">Добро пожаловать в</span>
+                    <span class="brand-name">RentStyle</span>
+                    <span class="d-block mt-2">Аренда одежды для особых случаев</span>
+                </h1>
+
+                <p class="description">
+                    Зачем покупать дорогое платье или костюм, если можно взять их в аренду?
+                    Носите лучшие вещи, экономьте бюджет и освобождайте место в шкафу.
+                </p>
+                <p class="description">
+                    ✨ В нашем каталоге — <strong>дизайнерские наряды, вечерние платья, классические костюмы и аксессуары</strong>
+                    на любой случай. Все вещи проходят химчистку и проверку качества.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="{% url 'listing:listing_list' %}" class="btn btn-primary btn-lg px-4 shadow-sm fw-semibold">
+                        <i class="fas fa-tshirt me-2"></i>Смотреть каталог
+                    </a>
+                    <a href="{% url 'homepage:how_it_works' %}" class="btn btn-outline-dark btn-lg px-4 shadow-sm fw-semibold">
+                        <i class="fas fa-info-circle me-2"></i>Как это работает
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center">
+                <div class="hero-image">
+                    <img src="{% static 'images/hero.jpg' %}" alt="Аренда одежды" class="img-fluid rounded-4" style="max-height: 400px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Преимущества -->
+    <div class="advantages mt-5 pt-4">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold" style="font-family: 'Playfair Display', serif;">Почему выбирают нас</h2>
+            <p class="text-muted">Преимущества аренды одежды в RentStyle</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-gem"></i></div>
+                    <h5>Дизайнерские бренды</h5>
+                    <p class="text-muted small mb-0">В каталоге только оригинальные вещи от известных брендов</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-spray-can-sparkles"></i></div>
+                    <h5>Идеальная чистота</h5>
+                    <p class="text-muted small mb-0">Каждая вещь проходит профессиональную химчистку</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-wallet"></i></div>
+                    <h5>Экономия бюджета</h5>
+                    <p class="text-muted small mb-0">Аренда в 5-10 раз дешевле покупки нового наряда</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="advantage-card">
+                    <div class="advantage-icon"><i class="fas fa-truck-fast"></i></div>
+                    <h5>Удобная доставка</h5>
+                    <p class="text-muted small mb-0">Привезём наряд к нужной дате и заберём после</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Как это работает -->
+    <div class="row mt-5 pt-5 align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+            <h2 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif;">Как арендовать вещь?</h2>
+            <p class="text-muted mb-4">Всего 4 простых шага отделяют вас от идеального образа.</p>
+            <a href="{% url 'listing:listing_list' %}" class="btn btn-primary fw-semibold">Начать выбор</a>
+        </div>
+        <div class="col-lg-7">
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 border">
+                        <div class="step-circle bg-primary text-white">1</div>
+                        <h6 class="fw-bold text-center">Выберите вещь</h6>
+                        <p class="text-muted small text-center mb-0">Найдите нужный наряд в каталоге по размеру и дате</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 border">
+                        <div class="step-circle bg-primary text-white">2</div>
+                        <h6 class="fw-bold text-center">Отправьте запрос</h6>
+                        <p class="text-muted small text-center mb-0">Укажите даты аренды и дождитесь подтверждения</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 border">
+                        <div class="step-circle bg-primary text-white">3</div>
+                        <h6 class="fw-bold text-center">Оплатите</h6>
+                        <p class="text-muted small text-center mb-0">Внесите стоимость аренды и залог за сохранность</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-4 bg-white rounded shadow-sm h-100 border">
+                        <div class="step-circle bg-primary text-white">4</div>
+                        <h6 class="fw-bold text-center">Носите и возвращайте</h6>
+                        <p class="text-muted small text-center mb-0">Наслаждайтесь событием и верните вещь в срок</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Призыв к действию (для арендодателей) -->
+    <div class="mt-5 p-5 bg-dark text-white rounded-4 shadow-lg text-center position-relative overflow-hidden">
+        <div class="position-relative z-1">
+            <h3 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif;">У вас есть ненужные вещи в шкафу?</h3>
+            <p class="mb-4 text-white-50 mx-auto" style="max-width: 600px;">
+                Превратите их в источник дохода! Сдавайте одежду в аренду через RentStyle,
+                пока мы берём на себя поиск клиентов, доставку и химчистку.
+            </p>
+            <a href="{% url 'listing:listing_create' %}" class="btn btn-light btn-lg px-5 fw-bold text-dark">
+                <i class="fas fa-plus-circle me-2"></i>Сдать вещь в аренду
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}История платежей — RentStyle{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="fw-bold mb-4" style="font-family: 'Playfair Display', serif;">История платежей</h2>
+
+    {% if transactions %}
+        <div class="table-responsive bg-white rounded-4 shadow-sm p-3">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>№</th>
+                        <th>Дата</th>
+                        <th>Вещь</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in transactions %}
+                        <tr>
+                            <td>#{{ tx.pk }}</td>
+                            <td>{{ tx.transaction_date|date:"d.m.Y H:i" }}</td>
+                            <td>{{ tx.rental_request.listing.title|truncatechars:30 }}</td>
+                            <td class="fw-bold">{{ tx.rental_cost }} ₽</td>
+                            <td>
+                                <span class="badge bg-success">{{ tx.get_status_display }}</span>
+                            </td>
+                            <td>
+                                <a href="{% url 'transaction:transaction_detail' tx.pk %}" class="btn btn-sm btn-outline-primary">Чек</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-light border shadow-sm rounded-4 p-5 text-center">
+            <i class="fas fa-receipt fa-3x text-muted mb-3 opacity-50"></i>
+            <h5>У вас пока нет транзакций</h5>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

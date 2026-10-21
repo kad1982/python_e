@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Вопросы и ответы — RentStyle{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homepage/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    
+    <!-- Шапка -->
+    <div class="faq-header">
+        <h1 class="fw-bold display-5 mb-3" style="font-family: 'Playfair Display', serif;">Вопросы и ответы</h1>
+        <p class="lead text-muted mx-auto mb-0" style="max-width: 600px;">
+            Собрали ответы на самые популярные вопросы о сервисе аренды одежды RentStyle.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+
+            <!-- РАЗДЕЛ 1: Аренда и выбор вещи -->
+            <h3 class="faq-category-title">👗 Аренда и выбор вещи</h3>
+            <div class="accordion mb-5" id="accordionRent">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rent1" aria-expanded="true">
+                            Как понять, подойдет ли мне размер?
+                        </button>
+                    </h2>
+                    <div id="rent1" class="accordion-collapse collapse show" data-bs-parent="#accordionRent">
+                        <div class="accordion-body">
+                            В карточке каждой вещи указан размер. Мы рекомендуем сверяться с нашей <a href="{% url 'homepage:sizes' %}" class="text-decoration-none">размерной сеткой</a>. Если вы сомневаетесь, напишите владельцу вещи в комментарии к запросу — он сможет предоставить точные замеры (например, длину рукава или полуобхват груди в готовом виде).
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rent2">
+                            Можно ли примерить вещь перед тем, как забрать?
+                        </button>
+                    </h2>
+                    <div id="rent2" class="accordion-collapse collapse" data-bs-parent="#accordionRent">
+                        <div class="accordion-body">
+                            Да. Если вы выбрали доставку курьером, у вас есть 15 минут на примерку. Если вещь не подошла, вы можете отказаться от аренды на месте (в этом случае оплачивается только стоимость доставки). При получении в пункте выдачи примерка недоступна.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rent3">
+                            Сколько человек может арендовать одну и ту же вещь?
+                        </button>
+                    </h2>
+                    <div id="rent3" class="accordion-collapse collapse" data-bs-parent="#accordionRent">
+                        <div class="accordion-body">
+                            Вещь может быть забронирована только на одни даты одним человеком. Если вы отправили запрос, а даты заняты, система предложит вам выбрать другие даты или похожие вещи из каталога.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- РАЗДЕЛ 2: Оплата и залог -->
+            <h3 class="faq-category-title">💳 Оплата и залог</h3>
+            <div class="accordion mb-5" id="accordionPay">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay1">
+                            Что такое залог и зачем он нужен?
+                        </button>
+                    </h2>
+                    <div id="pay1" class="accordion-collapse collapse" data-bs-parent="#accordionPay">
+                        <div class="accordion-body">
+                            Залог — это страховочная сумма, которая гарантирует сохранность вещи. Он не является платой за аренду. После того как вы вернете вещь и владелец подтвердит, что с ней всё в порядке, залог возвращается вам на ту же карту, с которой была произведена оплата (в течение 1-3 рабочих дней).
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay2">
+                            Как формируется итоговая стоимость?
+                        </button>
+                    </h2>
+                    <div id="pay2" class="accordion-collapse collapse" data-bs-parent="#accordionPay">
+                        <div class="accordion-body">
+                            Итоговая сумма состоит из трёх частей:
+                            <ul class="mt-2 mb-0">
+                                <li><strong>Стоимость аренды</strong> (цена за сутки × количество дней).</li>
+                                <li><strong>Сумма залога</strong> (устанавливается владельцем вещи).</li>
+                                <li><strong>Стоимость доставки</strong> (зависит от выбранного способа).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pay3">
+                            Можно ли оплатить аренду частями?
+                        </button>
+                    </h2>
+                    <div id="pay3" class="accordion-collapse collapse" data-bs-parent="#accordionPay">
+                        <div class="accordion-body">
+                            К сожалению, на данный момент оплата производится единым платежом. Бронирование подтверждается только после полной оплаты стоимости аренды и залога.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- РАЗДЕЛ 3: Возврат и повреждения -->
+            <h3 class="faq-category-title">🔄 Возврат и повреждения</h3>
+            <div class="accordion mb-5" id="accordionReturn">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ret1">
+                            Нужно ли стирать вещь перед возвратом?
+                        </button>
+                    </h2>
+                    <div id="ret1" class="accordion-collapse collapse" data-bs-parent="#accordionReturn">
+                        <div class="accordion-body">
+                            Нет, стирать и гладить вещь не нужно. Все вещи проходят профессиональную химчистку за счёт сервиса после возврата. Пожалуйста, просто аккуратно сложите вещь в чехол, в котором вы её получили.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ret2">
+                            Что делать, если я случайно испортил вещь?
+                        </button>
+                    </h2>
+                    <div id="ret2" class="accordion-collapse collapse" data-bs-parent="#accordionReturn">
+                        <div class="accordion-body">
+                            Пожалуйста, не скрывайте это. Сразу свяжитесь с нами или с владельцем вещи. Если повреждение небольшое (зацепка, оторванная пуговица), стоимость ремонта будет удержана из залога. Если вещь испорчена безвозвратно — вам придется возместить её полную стоимость.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ret3">
+                            Что будет, если я не успею вернуть вещь вовремя?
+                        </button>
+                    </h2>
+                    <div id="ret3" class="accordion-collapse collapse" data-bs-parent="#accordionReturn">
+                        <div class="accordion-body">
+                            Если ваши планы изменились, вы можете продлить аренду, связавшись с владельцем минимум за 24 часа до окончания срока (если вещь не занята другими). В случае просрочки без предупреждения из залога удерживается штраф — 150% от суточной стоимости аренды за каждый день опоздания.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Блок "Не нашли ответ?" -->
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="contact-support shadow-lg">
+                <i class="fas fa-headset fa-3x mb-3 text-primary"></i>
+                <h3 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif;">Не нашли ответ на свой вопрос?</h3>
+                <p class="text-white-50 mb-4">Наша служба поддержки работает ежедневно с 09:00 до 21:00 и всегда готова помочь.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="mailto:support@rentstyle.ru" class="btn btn-primary px-4 fw-bold">
+                        <i class="fas fa-envelope me-2"></i>Написать нам
+                    </a>
+                    <a href="tel:+78001234567" class="btn btn-outline-light px-4 fw-bold">
+                        <i class="fas fa-phone-alt me-2"></i>Позвонить
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
