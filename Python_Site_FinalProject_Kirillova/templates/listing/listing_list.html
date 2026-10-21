@@ -41,13 +41,17 @@
                 {% for listing in listings %}
                 <div class="col-md-6 col-xl-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card">
-                        <!-- Заглушка вместо фото, пока нет ImageField -->
+                        {% if listing.image %}
+                        <img src="{{ listing.image.url }}" class="listing-image" alt="{{ listing.title }}">
+                        {% else %}
                         <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
                             <i class="fas fa-tshirt fa-4x text-muted opacity-25"></i>
                         </div>
+                        {% endif %}
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="badge bg-primary bg-opacity-10 text-primary">{{ listing.get_status_display }}</span>
+                                <!-- Исправлено: убран перенос строки внутри переменной -->
                                 <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ listing.location }}</small>
                             </div>
                             <h5 class="card-title fw-bold text-truncate">{{ listing.title }}</h5>
@@ -58,7 +62,8 @@
                                     <small class="text-muted d-block">Аренда:</small>
                                     <span class="fs-5 fw-bold text-dark">{{ listing.price }} ₽</span>
                                 </div>
-                                <a href="{% url 'listing:listing_detail' listing.pk %}" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                <a href="{% url 'listing:listing_detail' listing.pk %}"
+                                   class="btn btn-outline-primary btn-sm rounded-pill px-3">
                                     Подробнее
                                 </a>
                             </div>

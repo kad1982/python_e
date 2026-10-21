@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    {% if object %}Редактирование: {{ object.title }}{% else %}Новое объявление{% endif %} — RentStyle
+{% if object %}Редактирование: {{ object.title }}{% else %}Новое объявление{% endif %} — RentStyle
 {% endblock %}
 
 {% block content %}
@@ -13,61 +13,98 @@
                 <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
                     <h3 class="fw-bold mb-0" style="font-family: 'Playfair Display', serif;">
                         {% if object %}
-                            <i class="fas fa-edit text-primary me-2"></i>Редактировать объявление
+                        <i class="fas fa-edit text-primary me-2"></i>Редактировать объявление
                         {% else %}
-                            <i class="fas fa-plus-circle text-primary me-2"></i>Сдать вещь в аренду
+                        <i class="fas fa-plus-circle text-primary me-2"></i>Сдать вещь в аренду
                         {% endif %}
                     </h3>
                 </div>
-                
+
                 <div class="card-body p-4">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        
+
                         <!-- Вывод общих ошибок формы -->
                         {% if form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {{ form.non_field_errors }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
                         {% endif %}
 
+
                         <div class="row g-3">
+                            <div class="col-12 mt-3 mb-3">
+                                <label for="id_image" class="form-label fw-semibold">Фотография вещи</label>
+
+                                {{ form.image }}
+
+                                {% if form.image.errors %}
+                                <div class="text-danger small mt-1">{{ form.image.errors }}</div>
+                                {% endif %}
+                                <div class="form-text">Загрузите качественное фото в формате JPG или PNG.</div>
+
+                                <!-- (Опционально) Показываем текущее фото, если оно уже загружено (при редактировании) -->
+                                {% if form.instance.image %}
+                                <div class="mt-3">
+                                    <small class="text-muted d-block mb-2">Текущее фото:</small>
+                                    <img src="{{ form.instance.image.url }}" alt="Текущее фото" class="img-thumbnail"
+                                         style="max-height: 200px;">
+                                </div>
+                                {% endif %}
+                            </div>
                             <!-- Поле Название -->
                             <div class="col-12">
-                                <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">Название</label>
+                                <label for="{{ form.title.id_for_label }}"
+                                       class="form-label fw-semibold">Название</label>
                                 {{ form.title }}
-                                {% if form.title.errors %}<div class="text-danger small">{{ form.title.errors }}</div>{% endif %}
+                                {% if form.title.errors %}
+                                <div class="text-danger small">{{ form.title.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Поле Описание -->
                             <div class="col-12">
-                                <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">Описание</label>
+                                <label for="{{ form.description.id_for_label }}"
+                                       class="form-label fw-semibold">Описание</label>
                                 {{ form.description }}
-                                {% if form.description.errors %}<div class="text-danger small">{{ form.description.errors }}</div>{% endif %}
+                                {% if form.description.errors %}
+                                <div class="text-danger small">{{ form.description.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Цена и Местоположение -->
                             <div class="col-md-6">
-                                <label for="{{ form.price.id_for_label }}" class="form-label fw-semibold">Цена (₽)</label>
+                                <label for="{{ form.price.id_for_label }}" class="form-label fw-semibold">Цена
+                                    (₽)</label>
                                 {{ form.price }}
-                                {% if form.price.errors %}<div class="text-danger small">{{ form.price.errors }}</div>{% endif %}
+                                {% if form.price.errors %}
+                                <div class="text-danger small">{{ form.price.errors }}</div>
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
                                 <label for="{{ form.location.id_for_label }}" class="form-label fw-semibold">Местоположение</label>
                                 {{ form.location }}
-                                {% if form.location.errors %}<div class="text-danger small">{{ form.location.errors }}</div>{% endif %}
+                                {% if form.location.errors %}
+                                <div class="text-danger small">{{ form.location.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Даты -->
                             <div class="col-md-6">
-                                <label for="{{ form.available_from.id_for_label }}" class="form-label fw-semibold">Доступно с</label>
+                                <label for="{{ form.available_from.id_for_label }}" class="form-label fw-semibold">Доступно
+                                    с</label>
                                 {{ form.available_from }}
-                                {% if form.available_from.errors %}<div class="text-danger small">{{ form.available_from.errors }}</div>{% endif %}
+                                {% if form.available_from.errors %}
+                                <div class="text-danger small">{{ form.available_from.errors }}</div>
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.available_to.id_for_label }}" class="form-label fw-semibold">Доступно по</label>
+                                <label for="{{ form.available_to.id_for_label }}" class="form-label fw-semibold">Доступно
+                                    по</label>
                                 {{ form.available_to }}
-                                {% if form.available_to.errors %}<div class="text-danger small">{{ form.available_to.errors }}</div>{% endif %}
+                                {% if form.available_to.errors %}
+                                <div class="text-danger small">{{ form.available_to.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Категории -->
@@ -76,33 +113,45 @@
                                 <div class="p-3 border rounded bg-light">
                                     {{ form.categories }}
                                 </div>
-                                {% if form.categories.errors %}<div class="text-danger small">{{ form.categories.errors }}</div>{% endif %}
+                                {% if form.categories.errors %}
+                                <div class="text-danger small">{{ form.categories.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Контакты -->
                             <div class="col-md-6">
-                                <label for="{{ form.contact_phone.id_for_label }}" class="form-label fw-semibold">Контактный телефон</label>
+                                <label for="{{ form.contact_phone.id_for_label }}" class="form-label fw-semibold">Контактный
+                                    телефон</label>
                                 {{ form.contact_phone }}
-                                {% if form.contact_phone.errors %}<div class="text-danger small">{{ form.contact_phone.errors }}</div>{% endif %}
+                                {% if form.contact_phone.errors %}
+                                <div class="text-danger small">{{ form.contact_phone.errors }}</div>
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.contact_email.id_for_label }}" class="form-label fw-semibold">Контактный Email</label>
+                                <label for="{{ form.contact_email.id_for_label }}" class="form-label fw-semibold">Контактный
+                                    Email</label>
                                 {{ form.contact_email }}
-                                {% if form.contact_email.errors %}<div class="text-danger small">{{ form.contact_email.errors }}</div>{% endif %}
+                                {% if form.contact_email.errors %}
+                                <div class="text-danger small">{{ form.contact_email.errors }}</div>
+                                {% endif %}
                             </div>
 
                             <!-- Статус (если нужно, чтобы автор сам публиковал) -->
                             <div class="col-12 mt-4">
-                                <label for="{{ form.status.id_for_label }}" class="form-label fw-semibold">Статус публикации</label>
+                                <label for="{{ form.status.id_for_label }}" class="form-label fw-semibold">Статус
+                                    публикации</label>
                                 {{ form.status }}
-                                {% if form.status.errors %}<div class="text-danger small">{{ form.status.errors }}</div>{% endif %}
+                                {% if form.status.errors %}
+                                <div class="text-danger small">{{ form.status.errors }}</div>
+                                {% endif %}
                             </div>
                         </div>
 
                         <hr class="my-4">
 
                         <div class="d-flex justify-content-between">
-                            <a href="{% if object %}{% url 'listing:listing_detail' object.pk %}{% else %}{% url 'listing:listing_list' %}{% endif %}" class="btn btn-outline-secondary">
+                            <a href="{% if object %}{% url 'listing:listing_detail' object.pk %}{% else %}{% url 'listing:listing_list' %}{% endif %}"
+                               class="btn btn-outline-secondary">
                                 Отмена
                             </a>
                             <button type="submit" class="btn btn-primary px-4 fw-bold">

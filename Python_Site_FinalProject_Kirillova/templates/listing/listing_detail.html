@@ -15,11 +15,20 @@
     </nav>
 
     <div class="row g-5">
-        <!-- Фото (заглушка) -->
         <div class="col-lg-6">
-            <div class="bg-light rounded-4 shadow-sm d-flex align-items-center justify-content-center" style="height: 500px; border: 1px solid #e9ecef;">
+            {% if listing.image %}
+            <!-- Если картинка есть, выводим её -->
+            <img src="{{ listing.image.url }}"
+                 class="img-fluid rounded-4 shadow-sm w-100"
+                 alt="{{ listing.title }}"
+                 style="max-height: 500px; object-fit: cover;">
+            {% else %}
+            <!-- Если картинки нет, показываем заглушку -->
+            <div class="bg-light rounded-4 shadow-sm d-flex align-items-center justify-content-center"
+                 style="height: 500px; border: 1px solid #e9ecef;">
                 <i class="fas fa-tshirt fa-6x text-muted opacity-25"></i>
             </div>
+            {% endif %}
         </div>
 
         <!-- Информация -->
@@ -49,9 +58,9 @@
                 <div class="col-12 mt-2">
                     <small class="text-muted d-block">Категории:</small>
                     {% for cat in listing.categories.all %}
-                        <span class="badge bg-secondary me-1">{{ cat.name }}</span>
+                    <span class="badge bg-secondary me-1">{{ cat.name }}</span>
                     {% empty %}
-                        <span class="text-muted small">Без категории</span>
+                    <span class="text-muted small">Без категории</span>
                     {% endfor %}
                 </div>
             </div>
@@ -60,18 +69,21 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-5">
                 <!-- Кнопка запроса на аренду (ведет в приложение rental_request) -->
                 {% if request.user != listing.author %}
-                <a href="{% url 'rental_request:create_request' listing.pk %}" class="btn btn-primary btn-lg px-5 fw-bold shadow-sm">
+                <a href="{% url 'rental_request:create_request' listing.pk %}"
+                   class="btn btn-primary btn-lg px-5 fw-bold shadow-sm">
                     <i class="fas fa-calendar-check me-2"></i>Запросить аренду
                 </a>
                 {% endif %}
                 <!-- Кнопки управления для автора (используем проверку в шаблоне) -->
                 {% if request.user == listing.author %}
-                    <a href="{% url 'listing:listing_update' listing.pk %}" class="btn btn-outline-secondary btn-lg d-flex justify-content-center align-items-center">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href="{% url 'listing:listing_delete' listing.pk %}" class="btn btn-outline-danger btn-lg d-flex justify-content-center align-items-center">
-                        <i class="fas fa-trash"></i>
-                    </a>
+                <a href="{% url 'listing:listing_update' listing.pk %}"
+                   class="btn btn-outline-secondary btn-lg d-flex justify-content-center align-items-center">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="{% url 'listing:listing_delete' listing.pk %}"
+                   class="btn btn-outline-danger btn-lg d-flex justify-content-center align-items-center">
+                    <i class="fas fa-trash"></i>
+                </a>
                 {% endif %}
             </div>
 

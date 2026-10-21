@@ -5,7 +5,7 @@ class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = [
-            'title', 'description', 'price', 'location',
+            'image', 'title', 'description', 'price', 'location',
             'available_from', 'available_to', 'categories',
             'contact_phone', 'contact_email',
             'status'
@@ -21,6 +21,7 @@ class ListingForm(forms.ModelForm):
                 attrs={'type': 'date', 'class': 'form-control'}
             ),
             'categories': forms.CheckboxSelectMultiple(),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control'}),

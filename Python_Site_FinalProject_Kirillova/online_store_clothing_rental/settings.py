@@ -139,6 +139,10 @@ MAILERS = {
     },
 }
 
+# картинки
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Aurification settings
 AUTH_USER_MODEL = 'users.Users'
 

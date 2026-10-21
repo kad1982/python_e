@@ -11,6 +11,8 @@ class Listing(models.Model):
         PUBLISHED = 1, "Опубликовано"
         ARCHIVED = 2, "В архиве"
 
+    image = models.ImageField(upload_to='listing_img', null=True, blank=True, verbose_name="Изображение")
+
     title = models.CharField(
         max_length=200,
         verbose_name="Название",

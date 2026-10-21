@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from online_store_clothing_rental import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', include('homepage.urls', namespace='homepage')),
     path('admin/', admin.site.urls),
@@ -25,3 +28,6 @@ urlpatterns = [
     path('rental_request/', include('rental_request.urls', namespace='rental_request')),
     path('transaction/', include('transaction.urls', namespace='transaction')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
