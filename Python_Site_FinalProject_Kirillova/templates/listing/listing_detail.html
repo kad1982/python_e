@@ -14,7 +14,7 @@
         </ol>
     </nav>
 
-    <div class="row g-5">
+    <div class="row g-5  mb-4">
         <div class="col-lg-6">
             {% if listing.image %}
             <!-- Если картинка есть, выводим её -->
@@ -101,6 +101,34 @@
                 <p class="mb-1"><i class="fas fa-phone me-2 text-muted"></i><a href="tel:{{ listing.contact_phone }}" class="text-decoration-none text-dark">{{ listing.contact_phone }}</a></p>
                 <p class="mb-0"><i class="fas fa-envelope me-2 text-muted"></i><a href="mailto:{{ listing.contact_email }}" class="text-decoration-none text-dark">{{ listing.contact_email }}</a></p>
             </div>
+        </div>
+    </div>
+    <div class="row g-5">
+        <!-- Блок отзывов -->
+        <div class="mt-5 pt-4 border-top">
+            <h4 class="fw-bold mb-4">Отзывы об этой вещи</h4>
+
+            {% if listing.reviews.all %}
+                <div class="row g-3">
+                    {% for review in listing.reviews.all %}
+                        <div class="col-12">
+                            <div class="card border-0 bg-light rounded-3 p-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <strong>{{ review.author.username }}</strong>
+                                    <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge bg-warning text-dark">Оценка вещи: {{ review.rating_listing }}/5</span>
+                                    <span class="badge bg-info text-dark">Оценка продавца: {{ review.rating_seller }}/5</span>
+                                </div>
+                                <p class="mb-0 text-muted">{{ review.comment }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Пока нет отзывов об этой вещи.</p>
+            {% endif %}
         </div>
     </div>
 </div>

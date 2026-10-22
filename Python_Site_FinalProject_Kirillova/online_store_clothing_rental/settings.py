@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rental_request.apps.RentalRequestConfig',
     'transaction.apps.TransactionConfig',
     'moderation.apps.ModerationConfig',
+    'review.apps.ReviewConfig',
 ]
 
 MIDDLEWARE = [

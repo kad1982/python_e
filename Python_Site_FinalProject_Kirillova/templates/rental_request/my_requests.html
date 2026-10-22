@@ -42,7 +42,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {% if req.status == 1 %} <!-- Если запрос одобрен -->
+                                {% if req.review %}
+                                    <a href="#" class="btn btn-sm btn-outline-secondary disabled">Отзыв оставлен</a>
+                                {% else %}
+                                    <a href="{% url 'review:add_review' req.pk %}" class="btn btn-sm btn-warning">Оставить отзыв</a>
+                                {% endif %}
+                            {% endif %}
                             <div class="d-flex justify-content-end">
                                 <a href="{% url 'rental_request:request_detail' req.pk %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
                             </div>

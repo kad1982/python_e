@@ -28,6 +28,7 @@ urlpatterns = [
     path('rental_request/', include('rental_request.urls', namespace='rental_request')),
     path('transaction/', include('transaction.urls', namespace='transaction')),
     path('moderation/', include('moderation.urls', namespace='moderation')),
+    path('review/', include('review.urls', namespace='review')),
 ]
 
 if settings.DEBUG:
