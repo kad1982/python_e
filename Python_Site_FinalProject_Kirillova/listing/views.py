@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Listing
 from .forms import ListingForm
+from django.db.models import Q
 
 
 class ListingListView(ListView):
@@ -19,7 +20,27 @@ class ListingListView(ListView):
             status=Listing.ListingStatus.PUBLISHED
         ).order_by('-created_at')
 
-        # Фильтрация по категории (если передана в GET-запросе)
+        # 1. Поиск по ключевым словам (в заголовке и описании)
+        q = self.request.GET.get('q')
+        if q:
+            queryset = queryset.filter(
+                Q(title__icontains=q) | Q(description__icontains=q)
+            )
+
+        # 2. Поиск по местоположению
+        location = self.request.GET.get('location')
+        if location:
+            queryset = queryset.filter(location__icontains=location)
+
+        # 3. Поиск по стоимости (максимальная цена)
+        max_price = self.request.GET.get('max_price')
+        if max_price:
+            try:
+                queryset = queryset.filter(price__lte=float(max_price))
+            except ValueError:
+                pass  # Игнорируем, если ввели не число
+
+        # 4. Фильтрация по категории
         category_name = self.request.GET.get('category')
         if category_name and category_name != 'all':
             queryset = queryset.filter(categories__name__iexact=category_name)
@@ -37,7 +58,27 @@ class MyListingListView(ListView):
     def get_queryset(self):
         queryset = Listing.objects.filter(author=self.request.user).order_by('-created_at')
 
-        # Фильтрация по категории (если передана в GET-запросе)
+        # 1. Поиск по ключевым словам (в заголовке и описании)
+        q = self.request.GET.get('q')
+        if q:
+            queryset = queryset.filter(
+                Q(title__icontains=q) | Q(description__icontains=q)
+            )
+
+        # 2. Поиск по местоположению
+        location = self.request.GET.get('location')
+        if location:
+            queryset = queryset.filter(location__icontains=location)
+
+        # 3. Поиск по стоимости (максимальная цена)
+        max_price = self.request.GET.get('max_price')
+        if max_price:
+            try:
+                queryset = queryset.filter(price__lte=float(max_price))
+            except ValueError:
+                pass  # Игнорируем, если ввели не число
+
+        # 4. Фильтрация по категории
         category_name = self.request.GET.get('category')
         if category_name and category_name != 'all':
             queryset = queryset.filter(categories__name__iexact=category_name)

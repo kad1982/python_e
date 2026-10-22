@@ -12,6 +12,28 @@
                 <div class="card-body p-4">
                     <h5 class="fw-bold mb-3">Фильтры</h5>
                     <form method="get" action="{% url 'listing:listing_list' %}">
+                        <!-- Поиск по ключевым словам -->
+                        <div class="mb-3">
+                            <label class="form-label text-muted small text-uppercase">Поиск</label>
+                            <input type="text" name="q" class="form-control" placeholder="Название или описание..."
+                                   value="{{ request.GET.q|default:'' }}">
+                        </div>
+
+                        <!-- Местоположение -->
+                        <div class="mb-3">
+                            <label class="form-label text-muted small text-uppercase">Город</label>
+                            <input type="text" name="location" class="form-control" placeholder="Например, Москва"
+                                   value="{{ request.GET.location|default:'' }}">
+                        </div>
+
+                        <!-- Цена -->
+                        <div class="mb-3">
+                            <label class="form-label text-muted small text-uppercase">Цена до (₽)</label>
+                            <input type="number" name="max_price" class="form-control" placeholder="Например, 2000"
+                                   value="{{ request.GET.max_price|default:'' }}">
+                        </div>
+
+                        <!-- Категория -->
                         <div class="mb-3">
                             <label class="form-label text-muted small text-uppercase">Категория</label>
                             <select name="category" class="form-select">
@@ -51,12 +73,18 @@
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="badge bg-primary bg-opacity-10 text-primary">{{ listing.get_status_display }}</span>
-                                <!-- Исправлено: убран перенос строки внутри переменной -->
                                 <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ listing.location }}</small>
                             </div>
                             <h5 class="card-title fw-bold text-truncate">{{ listing.title }}</h5>
                             <p class="card-text text-muted small mb-3 text-truncate">{{ listing.description }}</p>
-
+                             <div class="col-12 mt-2">
+                                <small class="text-muted d-block">Категории:</small>
+                                {% for cat in listing.categories.all %}
+                                <span class="badge bg-secondary me-1">{{ cat.name }}</span>
+                                {% empty %}
+                                <span class="text-muted small">Без категории</span>
+                                {% endfor %}
+                            </div>
                             <div class="d-flex justify-content-between align-items-end mt-auto">
                                 <div>
                                     <small class="text-muted d-block">Аренда:</small>
