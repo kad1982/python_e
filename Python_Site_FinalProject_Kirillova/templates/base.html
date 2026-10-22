@@ -171,6 +171,13 @@
                                 <i class="fas fa-receipt text-muted me-2"></i> История платежей
                             </a>
                         </li>
+                        {% if user.is_staff %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'moderation:pending_list' %}">
+                                <i class="fas fa-shield-alt text-muted me-2"></i> Модерация
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
                 {% else %}

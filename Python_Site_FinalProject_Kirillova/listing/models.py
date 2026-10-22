@@ -8,8 +8,9 @@ from category.models import Category
 class Listing(models.Model):
     class ListingStatus(models.IntegerChoices):
         DRAFT = 0, "Черновик"
-        PUBLISHED = 1, "Опубликовано"
-        ARCHIVED = 2, "В архиве"
+        PENDING = 1, "На модерации"
+        PUBLISHED = 2, "Опубликовано"
+        ARCHIVED = 3, "В архиве"
 
     image = models.ImageField(upload_to='listing_img', null=True, blank=True, verbose_name="Изображение")
 

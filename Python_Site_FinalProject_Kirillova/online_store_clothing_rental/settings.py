@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'users.apps.UsersConfig',
-    'category',
-    'listing',
-    'rental_request',
-    'transaction',
+    'category.apps.CategoryConfig',
+    'listing.apps.ListingConfig',
+    'rental_request.apps.RentalRequestConfig',
+    'transaction.apps.TransactionConfig',
+    'moderation.apps.ModerationConfig',
 ]
 
 MIDDLEWARE = [

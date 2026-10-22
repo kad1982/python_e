@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Модерация объявлений{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="fw-bold mb-4">Объявления на модерации</h2>
+
+    {% if listings %}
+        <div class="row g-4">
+            {% for listing in listings %}
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 rounded-4 h-100">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h5 class="fw-bold">{{ listing.title }}</h5>
+                                <span class="badge bg-warning text-dark">На проверке</span>
+                            </div>
+                            <p class="text-muted small mb-3">{{ listing.description|truncatechars:100 }}</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">{{ listing.price }} ₽</span>
+                                <div class="d-flex gap-2">
+                                    <!-- Форма для одобрения -->
+                                    <form method="post" action="{% url 'moderation:approve' listing.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm">Одобрить</button>
+                                    </form>
+                                    <!-- Форма для отклонения -->
+                                    <form method="post" action="{% url 'moderation:reject' listing.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Отклонить</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-success border-0 shadow-sm rounded-4 p-5 text-center">
+            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+            <h5>Все объявления проверены!</h5>
+            <p class="text-muted mb-0">Нет новых заявок на модерацию.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

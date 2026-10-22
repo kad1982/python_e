@@ -37,6 +37,11 @@
                 <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">{{ listing.get_status_display }}</span>
                 <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ listing.location }}</span>
             </div>
+            {% if listing.get_status_display != 'Черновик' %}
+                <div class="fw-semibold">
+                    Вы можете редактировать только черновики.
+                </div>
+            {% endif %}
 
             <h1 class="fw-bold mb-3" style="font-family: 'Playfair Display', serif;">{{ listing.title }}</h1>
             <h2 class="text-primary fw-bold mb-4">{{ listing.price }} ₽ <small class="text-muted fs-6 fw-normal">/ за период</small></h2>
@@ -76,10 +81,12 @@
                 {% endif %}
                 <!-- Кнопки управления для автора (используем проверку в шаблоне) -->
                 {% if request.user == listing.author %}
-                <a href="{% url 'listing:listing_update' listing.pk %}"
-                   class="btn btn-outline-secondary btn-lg d-flex justify-content-center align-items-center">
-                    <i class="fas fa-edit"></i>
-                </a>
+                    {% if listing.get_status_display == 'Черновик' %}
+                        <a href="{% url 'listing:listing_update' listing.pk %}"
+                           class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    {% endif %}
                 <a href="{% url 'listing:listing_delete' listing.pk %}"
                    class="btn btn-outline-danger btn-lg d-flex justify-content-center align-items-center">
                     <i class="fas fa-trash"></i>

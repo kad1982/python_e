@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -70,9 +72,23 @@ class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'listing/listing_form.html'
 
     def test_func(self):
-        # Проверяем, что редактирует именно автор
         listing = self.get_object()
-        return self.request.user == listing.author
+        # Проверяем, что это автор И объявление в статусе "Черновик"
+        return self.request.user == listing.author and listing.status == Listing.ListingStatus.DRAFT
+
+    def handle_no_permission(self):
+        # Если не прошел test_func, показываем сообщение
+        messages.error(self.request, "Вы можете редактировать только черновики.")
+        return redirect('listing:my_listing_list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        # Если пользователь выбрал "На модерацию", выводим уведомление
+        if self.object.status == Listing.ListingStatus.PENDING:
+            messages.success(self.request, 'Объявление отправлено на модерацию.')
+        else:
+            messages.success(self.request, 'Черновик сохранен.')
+        return response
 
     def get_success_url(self):
         return reverse('listing:listing_detail', kwargs={'pk': self.object.pk})

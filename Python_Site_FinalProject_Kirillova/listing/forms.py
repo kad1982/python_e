@@ -29,3 +29,11 @@ class ListingForm(forms.ModelForm):
             'contact_email': forms.EmailInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Ограничиваем выбор статусов для пользователя
+        self.fields['status'].choices = [
+            (Listing.ListingStatus.DRAFT, "Черновик"),
+            (Listing.ListingStatus.PENDING, "Отправить на модерацию"),
+        ]
