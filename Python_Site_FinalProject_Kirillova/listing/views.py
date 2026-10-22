@@ -16,11 +16,15 @@ class ListingListView(ListView):
     paginate_by = 12  # Пагинация по 12 штук на страницу
 
     def get_queryset(self):
-        queryset = Listing.objects.exclude(author=self.request.user).filter(
+        queryset = Listing.objects.filter(
             status=Listing.ListingStatus.PUBLISHED
         ).order_by('-created_at')
 
-        # 1. Поиск по ключевым словам (в заголовке и описании)
+        # Исключаем свои объявления, ТОЛЬКО если пользователь авторизован
+        if self.request.user.is_authenticated:
+            queryset = queryset.exclude(author=self.request.user)
+
+        # 1. Поиск по ключевым словам
         q = self.request.GET.get('q')
         if q:
             queryset = queryset.filter(
@@ -32,15 +36,15 @@ class ListingListView(ListView):
         if location:
             queryset = queryset.filter(location__icontains=location)
 
-        # 3. Поиск по стоимости (максимальная цена)
+        # 3. Поиск по цене
         max_price = self.request.GET.get('max_price')
         if max_price:
             try:
                 queryset = queryset.filter(price__lte=float(max_price))
             except ValueError:
-                pass  # Игнорируем, если ввели не число
+                pass
 
-        # 4. Фильтрация по категории
+        # 4. Категория
         category_name = self.request.GET.get('category')
         if category_name and category_name != 'all':
             queryset = queryset.filter(categories__name__iexact=category_name)
@@ -56,9 +60,13 @@ class MyListingListView(ListView):
     paginate_by = 12  # Пагинация по 12 штук на страницу
 
     def get_queryset(self):
-        queryset = Listing.objects.filter(author=self.request.user).order_by('-created_at')
+        queryset = Listing.objects.order_by('-created_at')
 
-        # 1. Поиск по ключевым словам (в заголовке и описании)
+        # свои объявления, ТОЛЬКО если пользователь авторизован
+        if self.request.user.is_authenticated:
+            queryset = queryset.filter(author=self.request.user)
+
+        # 1. Поиск по ключевым словам
         q = self.request.GET.get('q')
         if q:
             queryset = queryset.filter(
@@ -70,15 +78,15 @@ class MyListingListView(ListView):
         if location:
             queryset = queryset.filter(location__icontains=location)
 
-        # 3. Поиск по стоимости (максимальная цена)
+        # 3. Поиск по цене
         max_price = self.request.GET.get('max_price')
         if max_price:
             try:
                 queryset = queryset.filter(price__lte=float(max_price))
             except ValueError:
-                pass  # Игнорируем, если ввели не число
+                pass
 
-        # 4. Фильтрация по категории
+        # 4. Категория
         category_name = self.request.GET.get('category')
         if category_name and category_name != 'all':
             queryset = queryset.filter(categories__name__iexact=category_name)
@@ -94,16 +102,21 @@ class ListingDetailView(DetailView):
 
 
 class ListingCreateView(LoginRequiredMixin, CreateView):
-    """Создание нового объявления (только для авторизованных)"""
     model = Listing
     form_class = ListingForm
     template_name = 'listing/listing_form.html'
-    success_url = reverse_lazy('listing:my_listing_list')
 
     def form_valid(self, form):
-        # Автоматически привязываем автора к текущему пользователю
+        # Привязываем автора
         form.instance.author = self.request.user
+        # Принудительно ставим статус "Черновик" (или "На модерации", как вы решите)
+        form.instance.status = Listing.ListingStatus.DRAFT
+
+        messages.success(self.request, 'Объявление сохранено как черновик!')
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('listing:my_listing_list')
 
 
 class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
