@@ -37,11 +37,14 @@
                         <div class="mb-3">
                             <label class="form-label text-muted small text-uppercase">Категория</label>
                             <select name="category" class="form-select">
-                                <option value="all" {% if not request.GET.category %}selected{% elif request.GET.category == 'all' %}selected{% endif %}>Все категории</option>
-                                <option value="Вечерние платья" {% if request.GET.category == 'Вечерние платья' %}selected{% endif %}>Вечерние платья</option>
-                                <option value="Костюмы" {% if request.GET.category == 'Костюмы' %}selected{% endif %}>Костюмы</option>
-                                <option value="Верхняя одежда" {% if request.GET.category == 'Верхняя одежда' %}selected{% endif %}>Верхняя одежда</option>
-                                <option value="Аксессуары" {% if request.GET.category == 'Аксессуары' %}selected{% endif %}>Аксессуары</option>
+                                <option value="all" {% if not request.GET.category or request.GET.category == 'all' %}selected{% endif %}>
+                                    Все вещи
+                                </option>
+                                {% for cat in global_categories %}
+                                    <option value="{{ cat.name }}" {% if request.GET.category == cat.name %}selected{% endif %}>
+                                        {{ cat.name }}
+                                    </option>
+                                {% endfor %}
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary w-100 fw-semibold">Применить</button>

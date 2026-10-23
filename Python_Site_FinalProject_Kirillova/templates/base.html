@@ -29,11 +29,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 text-center text-md-start small">
-                <i class="fas fa-phone-alt me-2"></i>
-                <a href="tel:+78001234567" class="text-white text-decoration-none">8 (800) 123-45-67</a>
-                <span class="mx-2 text-white-50">|</span>
-                <i class="far fa-envelope me-2"></i>
-                <a href="mailto:info@rentstyle.ru" class="text-white text-decoration-none">info@rentstyle.ru</a>
+
             </div>
             <div class="col-md-6 text-center text-md-end small">
                 {% if user.is_authenticated %}
@@ -86,34 +82,38 @@
                                     Каталог
                                 </a>
                                 <ul class="dropdown-menu border-0 shadow-sm" aria-labelledby="catalogDropdown">
-                                    <li><a class="dropdown-item" href="{% url 'listing:listing_list' %}">Все вещи</a>
-                                    </li>
                                     <li>
-                                        <hr class="dropdown-divider">
+                                        <!-- Подсвечиваем "Все вещи", если не выбрана ни одна категория -->
+                                        <a class="dropdown-item fw-semibold {% if not request.GET.category %}active{% endif %}"
+                                           href="{% url 'listing:listing_list' %}">
+                                            Все вещи
+                                        </a>
                                     </li>
-                                    <!-- Ссылки на категории -->
-                                    <li><a class="dropdown-item"
-                                           href="{% url 'listing:listing_list' %}?category=Вечерние платья">👗 Вечерние
-                                        платья</a></li>
-                                    <li><a class="dropdown-item"
-                                           href="{% url 'listing:listing_list' %}?category=Костюмы">👔 Костюмы</a></li>
-                                    <li><a class="dropdown-item"
-                                           href="{% url 'listing:listing_list' %}?category=Верхняя одежда">🧥 Верхняя
-                                        одежда</a></li>
-                                    <li><a class="dropdown-item"
-                                           href="{% url 'listing:listing_list' %}?category=Аксессуары">👜 Аксессуары</a>
-                                    </li>
+
+                                    {% if global_categories %}
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        {% for cat in global_categories %}
+                                            <li>
+                                                <!-- Сравниваем текущую категорию из URL с названием из базы -->
+                                                <a class="dropdown-item {% if request.GET.category == cat.name %}active fw-bold{% endif %}"
+                                                   href="{% url 'listing:listing_list' %}?category={{ cat.name|urlencode }}">
+                                                    {{ cat.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold text-uppercase {% if 'about' in request.path %}active text-primary{% endif %}"
+                                <a class="nav-link fw-semibold text-uppercase {% if 'about' in request.path %}active{% endif %}"
                                    href="{% url 'homepage:about' %}"
                                    style="font-size: 0.9rem; letter-spacing: 1px;">
                                     О нас
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold text-uppercase {% if 'contacts' in request.path %}active text-primary{% endif %}"
+                                <a class="nav-link fw-semibold text-uppercase {% if 'contacts' in request.path %}active{% endif %}"
                                    href="{% url 'homepage:contacts' %}"
                                    style="font-size: 0.9rem; letter-spacing: 1px;">
                                     Контакты
@@ -127,14 +127,12 @@
             <!-- Кнопка добавления объявления / Корзина -->
             <div class="col-md-3 text-center text-md-end mt-3 mt-md-0 d-flex justify-content-center justify-content-md-end align-items-center gap-2">
                 {% if user.is_authenticated %}
-                <!-- Кнопка "Сдать вещь" (остается отдельно, так как это главное действие) -->
                 <a href="{% url 'listing:listing_create' %}"
                    class="btn btn-outline-dark btn-sm fw-semibold text-uppercase"
                    style="font-size: 0.8rem; letter-spacing: 1px;">
                     <i class="fas fa-plus me-1"></i>Сдать
                 </a>
 
-                <!-- Выпадающее меню "Мой профиль" / "Мои действия" -->
                 <div class="dropdown">
                     <button class="btn btn-primary btn-sm fw-semibold text-uppercase dropdown-toggle"
                             type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false"
@@ -181,7 +179,7 @@
                     </ul>
                 </div>
                 {% else %}
-                <!-- Для неавторизованных пользователей (если нужно) -->
+                <!-- Для неавторизованных пользователей -->
                 <a href="{% url 'users:login' %}" class="btn btn-primary btn-sm fw-semibold">
                     Войти
                 </a>
@@ -224,7 +222,7 @@
     <div class="container">
         <div class="row g-4">
             <!-- О проекте -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-6 col-md-6">
                 <h5 class="text-uppercase fw-bold mb-3"
                     style="letter-spacing: 1px; font-family: 'Playfair Display', serif;">
                     <i class="fas fa-tshirt me-2"></i>RentStyle
@@ -242,7 +240,7 @@
             </div>
 
             <!-- Полезные ссылки -->
-            <div class="col-lg-2 col-md-6 col-6">
+            <div class="col-lg-3 col-md-6 col-6">
                 <h6 class="text-uppercase fw-bold mb-3 small" style="letter-spacing: 1px;">Покупателям</h6>
                 <ul class="list-unstyled small">
                     <li class="mb-2"><a href="{% url 'listing:listing_list' %}"
@@ -269,17 +267,6 @@
                 </ul>
             </div>
 
-            <!-- Контакты -->
-            <div class="col-lg-4 col-md-6">
-                <h6 class="text-uppercase fw-bold mb-3 small" style="letter-spacing: 1px;">Контакты</h6>
-                <ul class="list-unstyled small text-white-50">
-                    <li class="mb-2"><i class="fas fa-phone me-2 text-primary"></i>8 (800) 123-45-67</li>
-                    <li class="mb-2"><i class="fas fa-envelope me-2 text-primary"></i>support@rentstyle.ru</li>
-                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2 text-primary"></i>г. Москва, ул. Модная, 15
-                    </li>
-                    <li class="mb-2"><i class="far fa-clock me-2 text-primary"></i>Пн-Вс: 09:00 – 21:00</li>
-                </ul>
-            </div>
         </div>
 
         <hr class="border-secondary my-4">

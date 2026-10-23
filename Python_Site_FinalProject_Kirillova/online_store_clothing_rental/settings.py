@@ -71,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # делаем, чтобы категории были доступны на любой странице сайта
+                'homepage.context_processors.categories',
             ],
         },
     },
@@ -89,7 +91,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'new_user'),
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': os.environ.get('POSTGRES_PORT', 5432),
-
     }
 }
 
