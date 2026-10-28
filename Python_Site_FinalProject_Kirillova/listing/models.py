@@ -11,6 +11,7 @@ class Listing(models.Model):
         PENDING = 1, "На модерации"
         PUBLISHED = 2, "Опубликовано"
         ARCHIVED = 3, "В архиве"
+        REJECTED = 4, "Отклонено"
 
     image = models.ImageField(upload_to='listing_img', null=True, blank=True, verbose_name="Изображение")
 
@@ -81,14 +82,15 @@ class Listing(models.Model):
         verbose_name_plural = "Объявления"
         ordering = ["-created_at"]
         indexes = [
-            # Частые фильтры: "опубликованные объявления в городе"
-            models.Index(fields=["status", "location"]),
-            # Фильтр по цене в пределах категории/города
-            models.Index(fields=["location", "price"]),
-            # Пересечение дат аренды
-            models.Index(fields=["available_from", "available_to"]),
-            # Объявления автора
-            models.Index(fields=["author", "status"]),
+            models.Index(fields=["status","title", "description", "location", "price"]),
+            # # Частые фильтры: "опубликованные объявления в городе"
+            # models.Index(fields=["status", "location"]),
+            # # Фильтр по цене в пределах категории/города
+            # models.Index(fields=["location", "price"]),
+            # # Пересечение дат аренды
+            # models.Index(fields=["available_from", "available_to"]),
+            # # Объявления автора
+            # models.Index(fields=["author", "status"]),
         ]
         constraints = [
             models.CheckConstraint(

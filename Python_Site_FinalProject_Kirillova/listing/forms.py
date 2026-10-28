@@ -1,5 +1,7 @@
 from django import forms
 from .models import Listing
+from django.utils import timezone
+
 
 class ListingForm(forms.ModelForm):
     class Meta:
@@ -29,6 +31,12 @@ class ListingForm(forms.ModelForm):
             'contact_email': forms.EmailInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
+
+    def clean_available_from(self):
+        available_from = self.cleaned_data.get('available_from')
+        if available_from and available_from < timezone.now().date():
+            raise forms.ValidationError("Дата начала сдачи вещи не может быть в прошлом.")
+        return available_from
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

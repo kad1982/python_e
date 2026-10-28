@@ -109,10 +109,10 @@ class ListingCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         # Привязываем автора
         form.instance.author = self.request.user
-        # Принудительно ставим статус "Черновик" (или "На модерации", как вы решите)
-        form.instance.status = Listing.ListingStatus.DRAFT
+        # # Принудительно ставим статус "Черновик"
+        # form.instance.status = Listing.ListingStatus.DRAFT
 
-        messages.success(self.request, 'Объявление сохранено как черновик!')
+        messages.success(self.request, f'Объявление сохранено со статусом: "{form.instance.get_status_display()}"')
         return super().form_valid(form)
 
     def get_success_url(self):
