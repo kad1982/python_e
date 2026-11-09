@@ -52,7 +52,7 @@ class ListingListView(ListView):
         return queryset
 
 
-class MyListingListView(ListView):
+class MyListingListView(LoginRequiredMixin, ListView):
     """Список моих объявлений"""
     model = Listing
     template_name = 'listing/listing_list.html'
@@ -60,11 +60,8 @@ class MyListingListView(ListView):
     paginate_by = 12  # Пагинация по 12 штук на страницу
 
     def get_queryset(self):
-        queryset = Listing.objects.order_by('-created_at')
-
-        # свои объявления, ТОЛЬКО если пользователь авторизован
-        if self.request.user.is_authenticated:
-            queryset = queryset.filter(author=self.request.user)
+        # Показываем только объявления текущего пользователя
+        queryset = Listing.objects.filter(author=self.request.user).order_by('-created_at')
 
         # 1. Поиск по ключевым словам
         q = self.request.GET.get('q')
@@ -100,6 +97,21 @@ class ListingDetailView(DetailView):
     template_name = 'listing/listing_detail.html'
     context_object_name = 'listing'
 
+    def get_queryset(self):
+        queryset = Listing.objects.all()
+        user = self.request.user
+
+        # Автор видит свои объявления в любом статусе, модератор — все
+        if user.is_authenticated:
+            if user.is_staff or user.is_superuser:
+                return queryset
+            return queryset.filter(
+                Q(status=Listing.ListingStatus.PUBLISHED) | Q(author=user)
+            )
+
+        # Остальным доступны только опубликованные объявления
+        return queryset.filter(status=Listing.ListingStatus.PUBLISHED)
+
 
 class ListingCreateView(LoginRequiredMixin, CreateView):
     model = Listing
@@ -125,23 +137,32 @@ class ListingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = ListingForm
     template_name = 'listing/listing_form.html'
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        # Запоминаем статус до сохранения правок
+        self.original_status = obj.status
+        return obj
+
     def test_func(self):
         listing = self.get_object()
-        # Проверяем, что это автор И объявление в статусе "Черновик"
-        return self.request.user == listing.author and listing.status == Listing.ListingStatus.DRAFT
+        # Редактировать может только автор любое своё объявление
+        return self.request.user == listing.author
 
     def handle_no_permission(self):
         # Если не прошел test_func, показываем сообщение
-        messages.error(self.request, "Вы можете редактировать только черновики.")
+        messages.error(self.request, "Вы можете редактировать только свои объявления.")
         return redirect('listing:my_listing_list')
 
     def form_valid(self, form):
+        # Правки опубликованного объявления должны пройти модерацию заново
+        if self.original_status == Listing.ListingStatus.PUBLISHED:
+            form.instance.status = Listing.ListingStatus.PENDING
         response = super().form_valid(form)
-        # Если пользователь выбрал "На модерацию", выводим уведомление
+        # Если объявление отправлено на модерацию, выводим уведомление
         if self.object.status == Listing.ListingStatus.PENDING:
             messages.success(self.request, 'Объявление отправлено на модерацию.')
         else:
-            messages.success(self.request, 'Черновик сохранен.')
+            messages.success(self.request, 'Объявление сохранено.')
         return response
 
     def get_success_url(self):

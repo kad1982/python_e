@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
+from django.utils import timezone
 from rental_request.models import RentalRequest
 from .models import Review
 from .forms import ReviewForm
@@ -23,6 +24,11 @@ class AddReviewView(LoginRequiredMixin, CreateView):
             return redirect('rental_request:my_requests')
 
         if self.rental_request.status != RentalRequest.RequestStatus.APPROVED:
+            messages.error(request, "Оставить отзыв можно только после завершения аренды.")
+            return redirect('rental_request:my_requests')
+
+        # Отзыв доступен только после фактического окончания срока аренды
+        if self.rental_request.end_date >= timezone.localdate():
             messages.error(request, "Оставить отзыв можно только после завершения аренды.")
             return redirect('rental_request:my_requests')
 

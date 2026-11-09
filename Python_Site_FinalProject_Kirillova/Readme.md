@@ -3,6 +3,10 @@
 логин на GitHub: https://github.com/kad1982/
 e-mail: kirilliza1982@gmail.com
 
+Для старта работы необходимо скопировать файл settings/.envs/.env.local.template в файл settings/.envs/.env и заполнить
+его своими данными, выполнив команду
+`cp settings/.envs/.env.local.template settings/.envs/.env`
+
 В рамках проекта реализовано:
 - Размещение объявления. Пользователи могут разместить объявление об аренде одежды. В объявлении:
 описание объекта;

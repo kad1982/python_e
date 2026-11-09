@@ -81,12 +81,10 @@
                 {% endif %}
                 <!-- Кнопки управления для автора (используем проверку в шаблоне) -->
                 {% if request.user == listing.author %}
-                    {% if listing.get_status_display == 'Черновик' %}
-                        <a href="{% url 'listing:listing_update' listing.pk %}"
-                           class="btn btn-outline-secondary btn-lg">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    {% endif %}
+                <a href="{% url 'listing:listing_update' listing.pk %}"
+                   class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-edit"></i>
+                </a>
                 <a href="{% url 'listing:listing_delete' listing.pk %}"
                    class="btn btn-outline-danger btn-lg d-flex justify-content-center align-items-center">
                     <i class="fas fa-trash"></i>
@@ -98,8 +96,12 @@
             <div class="mt-5 pt-4 border-top">
                 <h6 class="fw-bold mb-3">Контакты автора</h6>
                 <p class="mb-1"><i class="fas fa-user me-2 text-muted"></i>{{ listing.author.get_full_name|default:listing.author.username }}</p>
+                {% if user.is_authenticated %}
                 <p class="mb-1"><i class="fas fa-phone me-2 text-muted"></i><a href="tel:{{ listing.contact_phone }}" class="text-decoration-none text-dark">{{ listing.contact_phone }}</a></p>
                 <p class="mb-0"><i class="fas fa-envelope me-2 text-muted"></i><a href="mailto:{{ listing.contact_email }}" class="text-decoration-none text-dark">{{ listing.contact_email }}</a></p>
+                {% else %}
+                <p class="mb-0"><a href="{% url 'users:login' %}?next={{ request.path }}" class="text-decoration-none">Войдите, чтобы увидеть контакты автора</a></p>
+                {% endif %}
             </div>
         </div>
     </div>

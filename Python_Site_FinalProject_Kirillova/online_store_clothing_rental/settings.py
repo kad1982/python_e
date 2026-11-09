@@ -11,21 +11,43 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 import os
 from pathlib import Path
-import psycopg2
+
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
+# Загружаем переменные окружения из .env (не переопределяя уже заданные)
+load_dotenv(BASE_DIR / '.env')
+
+
+def env_required(name):
+    """Возвращает обязательную переменную окружения или падает с понятной ошибкой."""
+    value = os.environ.get(name)
+    if not value:
+        raise ImproperlyConfigured(f"Не задана обязательная переменная окружения {name}")
+    return value
+
+
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in ('1', 'true', 'yes', 'on')
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rcp6mr$l@tp#)n5=%-8jp^4u8v=h8+bkn^dnm7xw_%su)ff(v2'
+SECRET_KEY = env_required('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get('ALLOWED_HOSTS', '').split(',')
+    if host.strip()
+]
 
 # Application definition
 
@@ -88,9 +110,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get('POSTGRES_DB', 'clothing_rental'),
         'USER': os.environ.get('POSTGRES_USER', 'new_user'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'new_user'),
+        'PASSWORD': env_required('POSTGRES_PASSWORD'),
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_PORT', 5432),
+        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -135,12 +157,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
-
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
 
 # картинки
 MEDIA_URL = '/media/'

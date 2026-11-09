@@ -1,6 +1,6 @@
 from django.views.generic import ListView, View
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from listing.models import Listing
 
@@ -23,7 +23,9 @@ class PendingListingsView(LoginRequiredMixin, ModeratorRequiredMixin, ListView):
 class ApproveListingView(LoginRequiredMixin, ModeratorRequiredMixin, View):
     """Одобрение объявления"""
     def post(self, request, pk):
-        listing = Listing.objects.get(pk=pk)
+        listing = get_object_or_404(
+            Listing, pk=pk, status=Listing.ListingStatus.PENDING
+        )
         listing.status = Listing.ListingStatus.PUBLISHED
         listing.save()
         messages.success(request, f'Объявление "{listing.title}" одобрено.')
@@ -32,7 +34,9 @@ class ApproveListingView(LoginRequiredMixin, ModeratorRequiredMixin, View):
 class RejectListingView(LoginRequiredMixin, ModeratorRequiredMixin, View):
     """Отклонение объявления"""
     def post(self, request, pk):
-        listing = Listing.objects.get(pk=pk)
+        listing = get_object_or_404(
+            Listing, pk=pk, status=Listing.ListingStatus.PENDING
+        )
         listing.status = Listing.ListingStatus.REJECTED
         listing.save()
         messages.warning(request, f'Объявление "{listing.title}" отклонено.')
